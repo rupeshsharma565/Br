@@ -1,0 +1,25 @@
+<svg id="google" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fbbb00;
+      }
+
+      .cls-2 {
+        fill: #518ef8;
+      }
+
+      .cls-3 {
+        fill: #28b446;
+      }
+
+      .cls-4 {
+        fill: #f14336;
+      }
+    </style>
+  </defs>
+  <path id="Path_252" data-name="Path 252" class="cls-1" d="M3.99,144.315l-.626,2.338-2.289.049a9,9,0,0,1-.07-8.4h0l2.039.373.893,2.025a5.361,5.361,0,0,0-.288,1.74A5.279,5.279,0,0,0,3.99,144.315Z" transform="translate(0 -133.438)"/>
+  <path id="Path_253" data-name="Path 253" class="cls-2" d="M270.245,208.2a9.138,9.138,0,0,1,.158,1.68,8.986,8.986,0,0,1-3.364,7.021h0l-2.566-.13-.362-2.268a5.366,5.366,0,0,0,2.306-2.739H261.6V208.2h8.645Z" transform="translate(-252.403 -200.88)"/>
+  <path id="Path_254" data-name="Path 254" class="cls-3" d="M44.063,314.54h0A9,9,0,0,1,30.5,311.787l2.918-2.387a5.353,5.353,0,0,0,7.713,2.742Z" transform="translate(-29.428 -298.523)"/>
+  <path id="Path_255" data-name="Path 255" class="cls-4" d="M42.339,2.071,39.425,4.458a5.355,5.355,0,0,0-7.893,2.8L28.6,4.859h0A9.005,9.005,0,0,1,42.339,2.071Z" transform="translate(-27.595)"/>
+</svg>

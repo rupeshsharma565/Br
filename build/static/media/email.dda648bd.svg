@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: none;
+      }
+
+      .cls-2 {
+        stroke: #a1a5a9;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-miterlimit: 10;
+      }
+    </style>
+  </defs>
+  <g id="email" transform="translate(-43 -340)">
+    <rect id="Rectangle_69" data-name="Rectangle 69" class="cls-1" width="24" height="24" transform="translate(43 340)"/>
+    <g id="email-2" data-name="email" transform="translate(47 346)">
+      <path id="Path_267" data-name="Path 267" class="cls-2" d="M15.688,12.38H2.222A1.213,1.213,0,0,1,1,11.157V2.223A1.213,1.213,0,0,1,2.222,1H15.688A1.213,1.213,0,0,1,16.91,2.223v8.933A1.213,1.213,0,0,1,15.688,12.38Z" transform="translate(-1 -1)"/>
+      <path id="Path_268" data-name="Path 268" class="cls-2" d="M2,3,8.961,7.609a1.192,1.192,0,0,0,1.421,0L17.342,3" transform="translate(-1.716 -2.431)"/>
+      <line id="Line_5" data-name="Line 5" class="cls-2" x1="3.068" y2="3.158" transform="translate(3.125 4.524)"/>
+      <line id="Line_6" data-name="Line 6" class="cls-2" x2="3.068" y2="3.158" transform="translate(9.716 4.524)"/>
+    </g>
+  </g>
+</svg>
