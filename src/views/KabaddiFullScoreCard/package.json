@@ -1,0 +1,6 @@
+{
+  "name": "KabaddiFullScoreCard",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./KabaddiFullScoreCard.js"
+}

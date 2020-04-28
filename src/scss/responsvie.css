@@ -1,0 +1,49 @@
+@media (max-width: 1024px){
+.full_div {
+    display: none;
+}
+.left_logincontent {
+    max-width: none;
+    width: 100%;
+}
+.main .container-fluid {padding:0px;}
+.header_bg {max-width:none; width:100%;}
+.teampreview {display:none;}
+.app-body { margin-top: 0;}
+.progress_intesterbox {width: 22px;}
+.all_transaction {max-width:100%;}
+
+
+
+
+}
+
+
+@media (max-width: 767px){
+	
+.fourth_mtboxdeall .col-sm-3 { width: 25%;     padding: 0px 6px;}
+.creditsText_a4625 {font-size: 20px;}
+.selectedCount_text {
+font-size: 14px;}
+.flex_contryimg { width: 30px; height: 30px;}
+.flex_contryimgrightbox { width: 30px; height: 30px;}
+.selectedCount_text {padding:0px;}
+.img_areaaddtem { width: 35px; height: 35px;}
+.imgdiscription_rightde {  margin-left: 0;  font-size: 12px;}
+.loaderdiv {width: 100%;}
+
+.left_logincontent {height:auto; overflow:auto;}
+
+/** vj css 20/05/2019 **/
+.foot {left:0px; width:100%;}
+.foot p {font-size:16px;}
+.home_leftptfix {padding:50px 0px;}
+.swal-overlay {width:calc(100% - 0px) !important;}
+
+
+}
+
+@media (max-width: 479px){
+a.score_nmds {left:270px; padding:0px 13px;}
+
+}

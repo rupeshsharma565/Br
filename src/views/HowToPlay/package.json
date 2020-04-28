@@ -1,0 +1,6 @@
+{
+  "name": "HowToPlay",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./HowToPlay.js"
+}
