@@ -242,7 +242,7 @@ class Login extends Component {
             {             
               if(json.code===6)
               {
-                window.location.href ="/#/Verifyotp/"+gresponse.phone;
+                window.location.href ="/#/Verifyotp/"+btoa(gresponse.phone);
               }
               else
               {  
@@ -350,7 +350,7 @@ class Login extends Component {
             { 
               if(json.code===6)
               {
-                window.location.href ="/#/Verifyotp/"+fresponse.phone;
+                window.location.href ="/#/Verifyotp/"+btoa(fresponse.phone);
               }
               else
               {
