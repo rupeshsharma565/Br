@@ -137,7 +137,7 @@ class Verifyotp extends Component {
     reqapi = api_url + "/resendotp";
 
     var args1 = {
-      username: atob(username),
+      username: username,
       atype:"newreg",
       devicetype:"web",
       devicetoken:"asd46ad46ada4ds"
