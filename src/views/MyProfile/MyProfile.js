@@ -360,10 +360,11 @@ class MyProfile extends Component {
                     </div>
                     <div className="form-group">
                       <input type="text" className="form-control" readOnly={(formthis.state.istnameedit==="1")?false:true} name="teamname" onChange={formthis.onChange} value={formthis.state.teamname} placeholder="Team Name" />
-                      <small>* Team Name should be editable one time only .</small>
+                      <small>* Team Name should be editable one time only.</small>
                     </div>
                     <div className="form-group">
                       <input type="date" className="form-control" name="dob" onChange={formthis.onChange} value={formthis.state.dob} placeholder="DOB" />
+                      <small>DOB is entered in format mm/dd/yyyy</small>
                     </div>
                     <div className="form-group">
                       <label>Gender</label>
@@ -416,7 +417,7 @@ class MyProfile extends Component {
                       />
                     </div>
                   </div>
-                  <button className={"all_transaction up_bt pointer"}><img src={require("./../../images/update_p_icon.png")} /> Edit Profile</button>
+                  <button className={"all_transaction up_bt pointer"}><img src={require("./../../images/update_p_icon.png")} /> Save Profile</button>
                 </div>
               </div>
             </AvForm>
