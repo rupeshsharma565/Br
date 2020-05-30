@@ -46,6 +46,7 @@
     "react-share": "^2.4.0",
     "react-spinners": "^0.5.1",
     "react-test-renderer": "^16.7.0",
+    "react-toastify": "^6.0.5",
     "reactstrap": "^7.0.2",
     "simple-line-icons": "^2.4.1",
     "sweetalert": "^2.1.2"

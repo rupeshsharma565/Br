@@ -5,12 +5,14 @@ import {
 } from 'reactstrap';
 import swal from 'sweetalert';
 import config from './../../config';
-import { dashboardpage, getCurrentTime, converttosecondnew, checkresponse, secondsToTime, goBack, sendHome, sessioncheck, HBRout,getConvertoWord,overrideLoaderCss,loaderColorCode } from './../../Comman';
+import { dashboardpage, getCurrentTime, converttosecondnew, checkresponse, secondsToTime, goBack, sendHome, sessioncheck, HBRout,getConvertoWord,overrideLoaderCss,loaderColorCode,toastMessage } from './../../Comman';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import { ClipLoader } from 'react-spinners';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 let scurrenttimestamp = 0;
 //let interval;
+
 
 class Contests extends Component {
   constructor(props) {
@@ -28,6 +30,7 @@ class Contests extends Component {
       myjoinedpool: {},
       totaljoin:"0",
       isNotify:false,
+      isNotifyPriv:false,
       eventtype:"",
       selectpoolid:0,
       selectjoincost:0,
@@ -43,13 +46,19 @@ class Contests extends Component {
         wltwin:0,
         entryfees:0
       },
-      isLoading :false
+      isLoading :false,
+      contestcode:"",
+      isOpenModal:false
     };
     sessioncheck();
     this.timer = 0;
     this.toggle = this.toggle.bind(this);
     this.startTimer = this.startTimer.bind(this);
     this.toggleNotification = this.toggleNotification.bind(this);
+    this.toggleNotificationPriv = this.toggleNotificationPriv.bind(this);
+    this.onChange = this.onChange.bind(this)
+    this.toggleContestCodeModal = this.toggleContestCodeModal.bind(this);
+    this.openPrivateModal = this.openPrivateModal.bind(this);
   }
 
   componentDidMount() {
@@ -70,6 +79,13 @@ class Contests extends Component {
       isNotify: !this.state.isNotify,
     });
   }
+  
+  toggleNotificationPriv() {
+    this.setState({
+      isNotifyPriv: !this.state.isNotifyPriv
+    });
+  }
+
 
   listMatchesFront = () => {
     var formthis = this;
@@ -128,7 +144,10 @@ class Contests extends Component {
 
 
   balanceAmountDetailCheck(joinamount,poolid) {
-    let formthis=this;
+    var formthis = this;
+    formthis.setState({
+      isLoading: true
+    });
     return new Promise(function (resolve, reject) {
 
       var matchid = formthis.props.match.params.matchid;
@@ -138,13 +157,15 @@ class Contests extends Component {
       var api_url = `${config.API_URL}`;
       var reqapi = "";
       
+      let ccode=(formthis.state.ccode)?formthis.state.ccode:"";
 
       var args1 = {
         matchid: matchid,
         poolcontestid: poolid,
         //uteamid: teamid,
         fees: joinamount,
-        atype: "prejoin"///"prejoin"
+        atype: "prejoin",
+        ccode:formthis.state.contestcode//"MPH18lx4HgTZ"//ccode
       };
 
       reqapi = api_url + "/frontapi/joincontest";
@@ -165,14 +186,25 @@ class Contests extends Component {
                 response.json().then(json => {
                   if (json.error === false) {
                     resolve(json)
+                    formthis.setState({
+                      isOpenModal:false,
+                      contest_code:""
+                    })
                   }
                   else {
+                    toastMessage("error",json.msg);
                     resolve(false)
                   }
                 })
               }
+              formthis.setState({
+                isLoading: false
+              });
 
             }).catch(error => {
+              formthis.setState({
+                isLoading: false
+              });
               checkresponse("Wrong", false, error.toString(), 0);
             });
        
@@ -194,8 +226,9 @@ let walletdetail={
   walletbalance:parseFloat(result.data.wallet.walletbalance),
   wltbns:parseFloat(result.data.wallet.wltbns),
   wltwin:parseFloat(result.data.wallet.wltwin),
-  entryfees:parseFloat(result.entryfees),
-  bnsdeduction:parseFloat(result.data.bnsdeduction)
+  entryfees:parseFloat(result.data.entryfees),//parseFloat(result.entryfees),
+  bnsdeduction:parseFloat(result.data.bnsdeduction),
+  poolcontestid:result.data.poolcontestid
 }
   this.setState({
     isNotify: true,
@@ -206,8 +239,8 @@ let walletdetail={
 
 btnNotification=()=>{
   let matchid = this.props.match.params.matchid;
-  let poolid= this.state.selectpoolid;
-  let joincost= this.state.selectjoincost;
+  let poolid=this.state.walletdetail.poolcontestid; //this.state.selectpoolid;
+  let joincost=this.state.walletdetail.entryfees; //this.state.selectjoincost;
   
   if(this.state.eventtype==="addbalanceAddCash")
   {
@@ -216,27 +249,33 @@ btnNotification=()=>{
 
   if(this.state.eventtype==="addbalanceChooseTeam")
   {
-    window.location.href = HBRout + '/ChooseTeam/' + matchid + '/' + poolid + '/' + btoa(joincost);
+    window.location.href = HBRout + '/ChooseTeam/' + matchid + '/' + poolid + '/' +btoa(joincost);
   }
 
   if(this.state.eventtype==="join_contest")
   {
-    window.location.href = HBRout + '/ChooseTeam/' + matchid + '/' + poolid + '/' + btoa(joincost);
+    window.location.href = HBRout + '/ChooseTeam/' + matchid + '/' + poolid + '/' +btoa(joincost);
   }
 }
 
 
-  setCreateTeam = (event, joincost, poolid) => {
-    event.stopPropagation();
+  setCreateTeam = (event,joincost, poolid) => {
+    if(event)
+    {
+      event.stopPropagation();
+    }
     let formthis = this;
     let matchid = this.props.match.params.matchid;
     
     if (this.state.matchMyTeamListCount > 0) {
+      console.log("setCreateTeamresult------>>>",joincost,poolid);
       this.balanceAmountDetailCheck(joincost,poolid).then(result=>{
+        if(result)
+        {
         if (joincost > this.state.freeamount)//change
         {
           //if (joincost <= this.state.getblance) {
-            if (result.data.fees>0) {    
+            if (result.data && result.data.fees>0) {    
 
               result.eventtype="addbalance";
               result.btnname="Add Balance";
@@ -246,26 +285,10 @@ btnNotification=()=>{
               selectjoincost:joincost
           });
               formthis.callnotification(result);
-            // swal({
-            //   html:true,
-            //   title: "Are you sure?",
-            //   text: "Your wallet balance is ₹" + result.data.wallet.walletbalance + ", bonus is ₹" + result.data.wallet.wltbns + ", winning is ₹" + result.data.wallet.wltwin + " for joining contest you have to add balance",
-            //   icon: "warning",
-            //   buttons: [
-            //     'No, cancel it!',
-            //     'Yes, Add Balance!'
-            //   ],
-            //   dangerMode: true,
-            // }).then(function (isConfirm) {
-            //   if (isConfirm) {
-            //     window.location.href = HBRout + '/AddCash'
-            //   }
-            // })
+           
           }
           else {
-            // sNotification={
-            //   eventtype:"join_contest"
-            // };
+           
             result.eventtype="join_contest";
             result.btnname="Join Contest";
             result.entryfees=joincost;
@@ -275,27 +298,12 @@ btnNotification=()=>{
               selectjoincost:joincost
             });
             formthis.callnotification(result);
-            // swal({
-            //   title: "Are you sure?",
-            //   text: "Your wallet balance is ₹" + result.data.wallet.walletbalance + ", bonus is ₹" + result.data.wallet.wltbns + ", winning is ₹" + result.data.wallet.wltwin + " and joining amount is " + joincost + "",
-            //   icon: "warning",
-            //   buttons: [
-            //     'No, cancel it!',
-            //     'Yes, Join Contest!'
-            //   ],
-            //   dangerMode: true,
-            // }).then(function (isConfirm) {
-            //   if (isConfirm) {
-            //     window.location.href = HBRout + '/ChooseTeam/' + matchid + '/' + poolid + '/' + btoa(joincost);
-            //   }
-            // })
+           
 
           }
         }
         else {
-          // sNotification={
-          //   eventtype:"join_contest"
-          // };
+         
           result.eventtype="join_contest";
           result.btnname="Join Contest";
           result.entryfees=joincost;
@@ -304,22 +312,8 @@ btnNotification=()=>{
               selectjoincost:joincost});
           formthis.callnotification(result);
 
-          // swal({
-          //   title: "Are you sure?",
-          //   text: "Your wallet balance is ₹" + result.data.wallet.walletbalance + ", bonus is ₹" + result.data.wallet.wltbns + ", winning is ₹" + result.data.wallet.wltwin + " and joining amount is " + joincost + "",
-          //   icon: "warning",
-          //   buttons: [
-          //     'No, cancel it!',
-          //     'Yes, Join Contest!'
-          //   ],
-          //   dangerMode: true,
-          // }).then(function (isConfirm) {
-          //   if (isConfirm) {
-          //     window.location.href = HBRout + '/ChooseTeam/' + matchid + '/' + poolid + '/' + btoa(joincost);
-          //   }
-          // })
         }
-
+      }
       });
 
     }
@@ -579,6 +573,93 @@ btnNotification=()=>{
     clearTimeout(this.interval);
   }
 
+  toggleContestCodeModal() {
+    this.setState({
+      isOpenModal: !this.state.isOpenModal,
+      contest_code:""
+    });
+  }
+  openPrivateModal= (e)=>{
+    this.setState({
+      isOpenModal:true
+    })
+  }
+  onChange= (e)=>{
+    const formthis = this;
+    let {name, value} = e.target;
+    
+    formthis.setState({
+      [name]: value
+    });
+  }
+
+  applyContestCode =() =>{
+    const formthis = this;
+    if(formthis.state.contest_code){
+      let formthis = this;
+    formthis.setState({
+      isLoading: true
+    });
+    var matchid = this.props.match.params.matchid;
+    var api_url = `${config.API_URL}`;
+    var reqapi = "";
+
+    var args1 = {
+      matchid: matchid,
+      ccode:formthis.state.contest_code
+    };
+
+    reqapi = api_url + "/frontapi/pvtcntstcheck";
+
+    var object = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + sessionStorage.getItem('jwt') + ''
+      },
+      body: JSON.stringify(args1)
+    }
+
+    fetch(reqapi, object)
+      .then(function (response) {
+        formthis.setState({
+          isLoading: false
+        });
+        var chkresp = checkresponse("Wrong", response.status, "", 2);
+        if (chkresp === true) {
+          response.json().then(json => {
+            if (json.error === false) {
+              formthis.setState({
+                contestcode: formthis.state.contest_code
+              },()=>{
+                formthis.setCreateTeam(null,1,1);
+              });
+            }else{
+              toastMessage("error",json.msg);
+            }
+          })
+        }
+
+      }).catch(error => {
+        formthis.setState({
+          isLoading: false
+        });
+        toastMessage("error",error.toString());
+      });
+    }else{
+      toastMessage("error","Please enter contest code");
+    }
+  }
+
+  createPrivateContest = () =>{
+    var formthis = this;
+    let matchid = this.props.match.params.matchid;
+    if(formthis.state.matchMyTeamListCount > 0){
+      window.location.href = HBRout + "/createPrivateContest/"+matchid;
+    }else{
+      toastMessage("error","Please create team first");
+    }
+  }
 
   render() {
     var formthis = this;
@@ -597,6 +678,7 @@ btnNotification=()=>{
       </div>
       {/** loader section end */}
         <div className="left_logincontent profilepadding0">
+        
           <div className="background-cover ng-scope">
             <div className="header_bg">
               <div className="hd_left">
@@ -619,13 +701,23 @@ btnNotification=()=>{
               <div className="innerx_bodyarea">
                 <div className="faq_accordian_pg">
                   <div className="panel-group" id="accordion">
-
+                  <div className={"topcreate_privatemain "+((config.IS_PRIVATE_CONT===false)?"hidden":"")} >
+                  <span className="pull-left">
+                    <a className="createprivate_contbtn" onClick={(e)=>{formthis.openPrivateModal()}} >Enter Contest Code
+                    <i className="fa fa-sign-in"></i>
+                    </a>
+                    </span>
+                    <span className="pull-right">
+                  <a href="javascript:void(0)" onClick={(e)=>{formthis.createPrivateContest()}} className="createprivate_contbtn" >Create a Contest 
+                  <i className="fa fa-plus-circle"></i></a>
+                  </span>
+              </div>
                     {
                       formthis.state.matchlist.map(function (itemcontest, index) {
                         return (
                           <div className="begings_mian" key={index}>
                             <div className="bgtop_nos fixed_bgnos">
-                            {/* <div class="teamvs_icon"><img src={itemcontest.contestlogo} alt="image" /></div> */}
+                            {/* <div className="teamvs_icon"><img src={itemcontest.contestlogo} alt="image" /></div> */}
                               <h3>{itemcontest.title}</h3>
                               <p>{itemcontest.subtitle}</p>
                             </div>
@@ -639,9 +731,8 @@ btnNotification=()=>{
                                     <div className="prizepool_ed pointernone">
                                       <span className="left_prizpool">Prize Pool <p title={itemPools.totalwining}>₹{getConvertoWord(itemPools.totalwining)}</p></span>
                                       <span className="right_prizpool">Entry Fees
-                                    {((formthis.state.joinlist[itemPools.contestid + "," + itemPools.contestmetaid] === true) && itemPools.s === "1") ? (<span className="win_inrsdto vale_ingrnind"><i className="fa fa-inr" aria-hidden="true" />{itemPools.joinfee}</span>) : (<button className="jont_oldbtn pointerevent" onClick={(e) => {
-                                          formthis.setCreateTeam(e, itemPools.joinfee, itemPools.id)
-                                        }}>{(config.PROJECT_CODE === "3") ? "Join " : ""}₹{itemPools.joinfee}</button>)}
+                                    {((formthis.state.joinlist[itemPools.contestid + "," + itemPools.contestmetaid] === true) && itemPools.s === "1") ? (<span className="win_inrsdto vale_ingrnind"><i className="fa fa-inr" aria-hidden="true" />{itemPools.joinfee}</span>) : (<button className="jont_oldbtn pointerevent" 
+                                    onClick={(e) => {formthis.setCreateTeam(e, itemPools.joinfee, itemPools.id)}}>{(config.PROJECT_CODE === "3") ? "Join " : ""}₹{itemPools.joinfee}</button>)}
                                       </span></div>
                                     <div className="sport_leftmain pointernone"><div className="imgleft_main">
                                       <Progress animated className="progress-xs" color="info" value={(((parseFloat(itemPools.maxteams) - parseFloat(itemPools.joinleft)) / parseFloat(itemPools.maxteams)) * 100)} />
@@ -719,6 +810,26 @@ btnNotification=()=>{
                   
                 </Modal>
 
+                <Modal isOpen={this.state.isOpenModal} toggle={this.toggleContestCodeModal}
+                       className={'modal-sm verfypop_enter forconfir_md contest_codepopupmain' + this.props.className}>
+                       
+                      <ModalHeader toggle={this.toggleContestCodeModal}>Private Contest Code</ModalHeader>
+                      <ModalBody>
+                        <div className="iconlogi_call">
+                        <div className="entr_mdconi">
+                          <input type="text" name="contest_code" value={formthis.state.contest_code} onChange={formthis.onChange} placeholder="Code" autoFocus={true}/>
+                        </div>
+                        
+                      </div>
+                  
+                      </ModalBody>
+                      <ModalFooter>
+                        <Button className="btncustom-md" color="primary" onClick={this.applyContestCode}>Apply Code</Button>
+                      
+                      </ModalFooter>
+                  
+                </Modal>
+                <ToastContainer />
       </div>
     );
   }

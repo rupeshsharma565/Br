@@ -18,6 +18,7 @@ const AddCash= React.lazy(() => import('./views/AddCash'));
 const PaytmCheckout= React.lazy(() => import('./views/PaytmCheckout'));
 const JoinContest= React.lazy(() => import('./views/JoinContest'));
 const ChooseTeam= React.lazy(() => import('./views/ChooseTeam'));
+const ChoosePrivateTeam= React.lazy(() => import('./views/ChoosePrivateTeam'));
 const ContestDetails= React.lazy(() => import('./views/ContestDetails'));
 const MyMatches= React.lazy(() => import('./views/MyMatches'));
 const SwitchTeam= React.lazy(() => import('./views/SwitchTeam'));
@@ -66,6 +67,7 @@ const routes = [
   { path: "/JoinContest/:matchid/:type"  ,name:"JoinContestType",component:JoinContest},
   { path: "/JoinContest/:matchid"  ,name:"JoinContest",component:JoinContest},
   { path: "/ChooseTeam/:matchid/:poolid/:joincost"  ,name:"ChooseTeam",component:ChooseTeam},
+  { path: "/ChoosePrivateTeam/:matchid/:responsejoin"  ,name:"ChoosePrivateTeam",component:ChoosePrivateTeam},
   { path: "/SwitchTeam/:matchid/:poolid"  ,name:"SwitchTeam",component:SwitchTeam},
   { path: "/ContestDetails/:matchid/:poolcontestid/:type"  ,name:"ContestDetailsType",component:ContestDetails},
   { path: "/ContestDetails/:matchid/:poolcontestid"  ,name:"ContestDetails",component:ContestDetails},

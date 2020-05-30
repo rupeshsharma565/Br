@@ -3,6 +3,7 @@ import DateDiff from 'date-diff';
 import dateFormat from 'dateformat';
 import config from './config';
 import { resolve } from 'url';
+import { ToastContainer, toast } from 'react-toastify';
 
 export const endtimeinsecond = 0;
 
@@ -457,4 +458,43 @@ export const fantasyPointSystem = {
     "redcard":"Red card",
     "makesubstitute":"Substitute appearance"
   }
+}
+
+export const securityCall=(swindow)=>{
+  if (swindow.location !== swindow.top.location) {
+  swindow.top.location = swindow.location;
+  }
+}
+
+export const toastMessage = (status,msg)=>{
+  toast.dismiss();
+  if(status==="success"){
+    toast.success(msg, {
+      position: toast.POSITION.TOP_LEFT
+    });
+  } else if(status==="error"){
+    toast.error(msg, {
+      position: toast.POSITION.TOP_LEFT
+    });
+  } else if(status==="warning"){
+    toast.warn(msg, {
+      position: toast.POSITION.TOP_LEFT
+    });
+  } else if(status==="info"){
+    toast.info(msg, {
+      position: toast.POSITION.TOP_LEFT
+    });
+  } else if(status===""){
+    toast(msg, {
+      position: toast.POSITION.TOP_LEFT,
+      className: 'foo-bar'
+    });
+  }
+  
+}
+
+export const priceOnPercent = (totalWinPrize=0,percent=0)=>{
+  let price = 0;
+  price = parseFloat(totalWinPrize*percent)/100;
+  return price;
 }
