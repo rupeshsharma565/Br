@@ -7,10 +7,13 @@ import React, { Component } from 'react';
 // import refer_code from './../../images/refer_code.svg'
 import { AvForm,AvField} from 'availity-reactstrap-validation';
 import config from './../../config';
-import { checkresponse ,HBRout,validation, dashboardpage,goBack,overrideLoaderCss,loaderColorCode,OTP_TIMEOUT} from './../../Comman';
+import { checkresponse ,HBRout,validation, dashboardpage,goBack,overrideLoaderCss,loaderColorCode,OTP_TIMEOUT,securityCall} from './../../Comman';
 import swal from 'sweetalert';
 import pass from './../../images/pass.svg'
 import { ClipLoader } from 'react-spinners';
+
+let swindow=window;
+securityCall(swindow);
 
 class LoginPassword extends Component {
   constructor(props) {
@@ -88,7 +91,9 @@ class LoginPassword extends Component {
               if(json.error===false)
               {               
                  sessionStorage.clear();
-                 sessionStorage.setItem("username",json.data.userinfo.email);                
+                 sessionStorage.setItem("username",json.data.userinfo.email);
+                 sessionStorage.setItem("name",json.data.userinfo.name); 
+                 sessionStorage.setItem("teamname",json.data.userinfo.teamname);                 
                  sessionStorage.setItem("jwt",json.data.token);
                  sessionStorage.setItem("refercode",json.data.refercode);
                  sessionStorage.setItem("id",json.data.id);
@@ -224,9 +229,9 @@ class LoginPassword extends Component {
               <AvField type="password" name="password" autoFocus value={this.state.password} onChange={this.onChange} className="form-control" placeholder="Password *" 
                validate={{
                 required: { value: true, errorMessage: "Password is required" },
-                pattern: { value: validation.password, errorMessage: 'Password must be at least 8 characters and must contain at least one lower case letter, one upper case letter and one digit' },
-                minLength: { value: 8, errorMessage: 'Password must be at least 8 characters' },
-                maxLength: { value: 20, errorMessage: 'Password not more then 20 characters' }
+                //pattern: { value: validation.password, errorMessage: 'Password must be at least 8 characters and must contain at least one lower case letter, one upper case letter and one digit' },
+                //minLength: { value: 8, errorMessage: 'Password must be at least 8 characters' },
+                //maxLength: { value: 20, errorMessage: 'Password not more then 20 characters' }
               }} /> 
             </div>
             <div className="form-group">

@@ -1,0 +1,6 @@
+{
+  "name": "AddCash",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./AddCash.js"
+}

@@ -4,6 +4,7 @@ import dateFormat from 'dateformat';
 import config from './config';
 import { resolve } from 'url';
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const endtimeinsecond = 0;
 
@@ -123,14 +124,15 @@ export const timestampToDateTime_old = (timestamp) => {
 export const timestampToDateTime = (timestamps)=> {
 
 var u = new Date(timestamps*1000);
-
+var month = u.getMonth();
+month = month+1;
   return u.getFullYear() +
-    '-' + ('0' + u.getMonth()).slice(-2) +
+    '-' + ('0' + month).slice(-2) +
     '-' + ('0' + u.getDate()).slice(-2) + 
     ' ' + ('0' + u.getHours()).slice(-2) +
     ':' + ('0' + u.getMinutes()).slice(-2) +
     ':' + ('0' + u.getSeconds()).slice(-2) 
-};
+}
 
 export const goBack = () => {
   //console.log("window.history--->>>", window.history);
@@ -277,6 +279,7 @@ export const getConvertoWord = (snumber) => {
 
 export const matchFormatTypes = (type) => {
   let matchtypes = {
+    "t10": "T10",
     "t20": "T20",
     "test": "Test",
     "one-day": "ODI",
@@ -325,6 +328,8 @@ export const playerPointKeyConst = {
     "wicket": "Wickets",
     "mdnover": "Maiden Overs",
     "catch": "Catch",
+    "thrower":"Thrower",
+    "catcher":"Catcher",
     "stumped": "Stumped",
     "runout": "Run Out",
     "fiftyBonus": "50's Bonus",
@@ -460,9 +465,17 @@ export const fantasyPointSystem = {
   }
 }
 
-export const securityCall=(swindow)=>{
-  if (swindow.location !== swindow.top.location) {
-  swindow.top.location = swindow.location;
+export const priceOnPercent = (totalWinPrize=0,percent=0)=>{
+  let price = 0;
+  price = parseFloat(totalWinPrize*percent)/100;
+  return price;
+}
+
+export const findObjectByKey = (nameKey, array) =>{
+  for (var i=0; i < array.length; i++) {
+      if (array[i].name === nameKey) {
+          return array[i];
+      }
   }
 }
 
@@ -493,8 +506,19 @@ export const toastMessage = (status,msg)=>{
   
 }
 
-export const priceOnPercent = (totalWinPrize=0,percent=0)=>{
-  let price = 0;
-  price = parseFloat(totalWinPrize*percent)/100;
-  return price;
+export const statusColorCode = (type = null) => {
+  let types = {
+    "uc": "#23282c",
+    "dc": "#08c308",
+    "cm": "#c7c70f",
+    "cl": "#d21818"
+  }
+  return type != null ? types[type] : '#23282c';
+}
+
+
+export const securityCall=(swindow)=>{
+    if (swindow.location !== swindow.top.location) {
+    swindow.top.location = swindow.location;
+    }
 }

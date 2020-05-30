@@ -1,0 +1,6 @@
+{
+  "name": "FantasyScoreCard",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./FantasyScoreCard.js"
+}

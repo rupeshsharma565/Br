@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import config from './../../config';
-import { dashboardpage, getCurrentTime, converttosecondnew, goBack, sendHome, checkresponse, converttosecond, secondsToTime, sessioncheck, HBRout, overrideLoaderCss, loaderColorCode } from './../../Comman';
+import { dashboardpage, getCurrentTime, converttosecondnew, goBack, sendHome, checkresponse, converttosecond, secondsToTime, sessioncheck, HBRout, overrideLoaderCss, loaderColorCode,securityCall } from './../../Comman';
 import { AvForm } from 'availity-reactstrap-validation';
 import { ClipLoader } from 'react-spinners';
 
 
 let scurrenttimestamp = 0;
 let interval;
+let swindow=window;
+securityCall(swindow);
 
 
 class CreateTeams extends Component {
@@ -47,7 +49,10 @@ class CreateTeams extends Component {
       totalselectteam4one:0,//7 or 5
       arrayplayertype:[],
       isLoading :false,
-      matchType:""
+      matchType:"",
+      redirecturl:"",
+      sortby:"",
+      sortOrder:true
     };
     sessioncheck();
     this.timer = 0;
@@ -63,6 +68,10 @@ class CreateTeams extends Component {
 
   componentDidMount() {
     let formthis=this;
+    let qurystrurl=this.props.location.search;
+    const params = new URLSearchParams(qurystrurl);
+    const redirecturl = params.get('redirecturl');
+    this.setState({redirecturl:redirecturl});
     sessioncheck();
     getCurrentTime().then(resultTimestamp => {
       scurrenttimestamp = resultTimestamp;
@@ -707,7 +716,15 @@ class CreateTeams extends Component {
                   if (json.error === false) {
                     let headername = (chkURLCloneTeam > 0) ? "Created" : ((teamid) ? "Updated" : "Created");
                     checkresponse(headername, 200, json.msg, 1);
-                    window.location.href = HBRout + '/MyTeams/' + matchid;
+                    
+                    if(formthis.state.redirecturl)
+                    {
+                      window.location.href = HBRout + '/' + formthis.state.redirecturl;  
+                    }
+                    else
+                    {
+                      window.location.href = HBRout + '/MyTeams/' + matchid;
+                    }
                   }
                   else {
                     formthis.setState({ saveOnClickOne: true });
@@ -1003,9 +1020,18 @@ class CreateTeams extends Component {
     // }
   }
 
+  sortingPlayers(sortby){
+    let sortOrder=!this.state.sortOrder;
+    this.setState({sortby:sortby,
+    sortOrder:sortOrder,
+    getalladdedplayeritems:this.state.getalladdedplayeritems.sort(function (a, b) { return (sortOrder===true)?(a.pts-b.pts):(b.pts-a.pts); })
+  });
+  }
 
   render() {
     var formthis = this;
+
+    //console.log(formthis.state.getalladdedplayeritems.sort(function (a, b) { return a.pts-b.pts ; }))
     return (
       <div className="fadeIn">
         {/** loader section start */}
@@ -1131,7 +1157,7 @@ class CreateTeams extends Component {
         <li><a href="#match4" data-toggle="tab"><div className="crenewtm_tabliimg"><img src={require("./../../images/bow.png")} alt="image" /><span>BOW</span></div> <div className="crenotification_value">0</div></a></li>
       </ul> */}
                       <div className="createTeamTabsHelpContainer_ce9c9">{(formthis.state.objplayertypelist[formthis.state.activeplayertype]) ? formthis.state.objplayertypelist[formthis.state.activeplayertype]["title"] : ""}</div>
-                      <div className="ctSortingHeader_a6515">
+                      <div className="ctSortingHeader_a6515 players_points">
                         <div className="row">
                           <div className="col-sm-4">
                             <div className="cerat_innertemctp"><b>PLAYERS</b></div>
@@ -1233,13 +1259,13 @@ class CreateTeams extends Component {
                 <div className="verify_pgcsmain">
                   <div className="tab_area home_nttabsbox creat_magteam matchboxes_intels">
                     <div className="tabsMainContainer_e2849">
-                      <div className="ctSortingHeader_a6515">
+                      <div className="ctSortingHeader_a6515 players_points">
                         <div className="row">
                           <div className="col-sm-5">
-                            <div className="cerat_innertemctp">PLAYERS</div>
+                            <div className="cerat_innertemctp cursorpointer" onClick={()=>this.sortingPlayers("type")}>PLAYERS <i className="fa fa-sort"></i></div>
                           </div>
                           <div className="col-sm-5 pointsboxes_ed">
-                            <div className="cerat_innertemctp points_textlemin">POINTS</div>
+                            <div className="cerat_innertemctp points_textlemin cursorpointer" onClick={()=>this.sortingPlayers("points")}>POINTS {(this.state.sortOrder===true)?( <i className="fa fa-angle-up"></i>):(<i className="fa fa-angle-down"></i>)}</div>
                           </div>
                         </div>
                       </div>
@@ -1248,12 +1274,18 @@ class CreateTeams extends Component {
                       <ul className="fot_creatmostaddt">
 
                         {
-                          formthis.state.getalladdedplayeritems.map(function (itemAPI, indexAPI) {
+                          (formthis.state.sortby==="points"?[1]:formthis.state.playertypelist).map(itemPlayerTypeList=>{
+                            return(
+                              <div className="wicket_keeperpart">
+                          {
+                          (formthis.state.getalladdedplayeritems).map(function (itemAPI, indexAPI) {
+                            if(formthis.state.sortby==="points" || itemPlayerTypeList.name==itemAPI.ptype){
                             return (
                               <li key={indexAPI}>
                                 <div className="chooscaption_part">
                                   <div className="img_areaaddtem"><img src={itemAPI.pimg} alt="image" /></div>
-                                  <div className="imgdiscription_rightde"> <div className="playername_textcreate">{itemAPI.pname}</div> <div className="playerteam_namebts">{itemAPI.teamname}-{itemAPI.ptype}</div></div>
+                                  <div className="imgdiscription_rightde"> <div className="playername_textcreate">{itemAPI.pname}</div> 
+                                  <div className="playerteam_namebts">{itemAPI.teamname}-{itemAPI.ptype}</div></div>
                                 </div>
                                 <div className="choos_viceacption">
                                   <div className="cradits_intboxde">{itemAPI.pts}</div>
@@ -1262,9 +1294,13 @@ class CreateTeams extends Component {
                                     <span id={itemAPI.pid} className={"roleCV pointer " + ((itemAPI.pid === formthis.state.captionClassVC) ? " roleCVSelect" : "")} onClick={formthis.onClickVC}>vc</span></div>
                                 </div>
                               </li>
-
                             )
-                          })}
+                          }
+                          })
+                          }
+                       </div> )
+                        })
+                        }
 
                       </ul>
                     </div>
@@ -1346,7 +1382,7 @@ class CreateTeams extends Component {
                 <div className="wkoals_main">
                   <ul>
                     {
-                      ((Object.keys(formthis.state.getaddedplayeritems[itemPType])).length>0?(Object.keys(formthis.state.getaddedplayeritems[itemPType])):[]).map(function (keyOne, indexOne) {
+                      ((formthis.state.getaddedplayeritems[itemPType] && (Object.keys(formthis.state.getaddedplayeritems[itemPType])).length>0)?(Object.keys(formthis.state.getaddedplayeritems[itemPType])):[]).map(function (keyOne, indexOne) {
                         let keyAll = itemPType;
                         return (
                           <li key={indexOne}>

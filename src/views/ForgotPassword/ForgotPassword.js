@@ -7,10 +7,13 @@ import React, { Component } from 'react';
 // import refer_code from './../../images/refer_code.svg'
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import config from './../../config';
-import { checkresponse,HBRout,validation, overrideLoaderCss, loaderColorCode} from './../../Comman';
+import { checkresponse,HBRout,validation, overrideLoaderCss, loaderColorCode,securityCall} from './../../Comman';
 //import swal from 'sweetalert';
 import logo from './../../images/logo.png'
 import { ClipLoader } from 'react-spinners';
+
+let swindow=window;
+securityCall(swindow);
 
 class ForgotPassword extends Component {
   constructor(props) {

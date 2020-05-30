@@ -1,0 +1,6 @@
+{
+  "name": "PaytmCheckout",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./PaytmCheckout.js"
+}

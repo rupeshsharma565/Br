@@ -4,7 +4,10 @@ import {
   Row,
 } from 'reactstrap';
 import config from './../../config';
-import { goBack,sendHome,checkresponse ,sessioncheck,timestampToDateTime,transactionhistory} from './../../Comman';
+import { goBack,sendHome,checkresponse ,sessioncheck,timestampToDateTime,transactionhistory,securityCall} from './../../Comman';
+
+let swindow=window;
+securityCall(swindow);
 
 class TransactionHistory extends Component {
   constructor(props) {

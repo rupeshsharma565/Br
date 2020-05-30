@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import config from './../../config';
-import {getCurrentTime, checkresponse,converttosecond, converttosecondnew, secondsToTime, sessioncheck,upcomingmatchs ,HBRout,matchFormatTypes, matchStatusTypes, timestampToDate, overrideLoaderCss, loaderColorCode,currentTimestamp, matchCountDown,unCamelCase,timestampToDateString} from './../../Comman';
+import {getCurrentTime, checkresponse,converttosecond, converttosecondnew, secondsToTime, sessioncheck,upcomingmatchs ,HBRout,matchFormatTypes, matchStatusTypes, timestampToDate, overrideLoaderCss, loaderColorCode,currentTimestamp, matchCountDown,unCamelCase,timestampToDateString, statusColorCode,securityCall} from './../../Comman';
 import { ClipLoader } from 'react-spinners';
 
 var pushtime = {};
@@ -8,7 +8,8 @@ var pushseconds = {};
 let scurrenttimestamp=0;
 let interval;
 //const Example = () => <UncontrolledCarousel items={itemslist} />;
-
+let swindow=window;
+securityCall(swindow);
 
 class Matches extends Component {
   //timer = 0;
@@ -702,24 +703,28 @@ class Matches extends Component {
                                   return (
                                     <li key={itemmatch.matchid} onClick={() => formthis.CreateTeam(itemmatch.matchid, itemmatch.mdategmt, itemmatch.team1, itemmatch.team2,formthis.state.tabstatus,itemmatch.seriesid)} className="pointer">
                                       <span className="match_series_name">{(itemmatch.seriesname) ? itemmatch.seriesname : ""}</span>
+                                      {(!itemmatch.lineup) ? <span className="match_lineup">Line up out</span> : ""}
                                       <div className="mt_starnamen pointernone"><div className="fir_country pointernone">
                                        <div className="mtlogcont"> <img src={itemmatch.team1logo} alt="img" /> </div><strong className="contryname_tit pointernone">{itemmatch.team1}</strong> </div></div>
                                       <div className="details_mtover pointernone"><div className="teams_f_center_panel pointernone">
                                       {/* <p className="leage_ntname">{itemmatch.matchname}</p>  */}
                                       <p className="leage_ntname">{matchFormatTypes(itemmatch.mtype)}  </p>
-                                      <p className="match-date">{ (itemmatch.mstatus !== "uc" && itemmatch.mstatus !== "li") ? timestampToDateString(itemmatch.mdategmt) : <strong className="vs_textpt pointernone">VS</strong>}</p>
+                                      <p className="match-date">{ (itemmatch.mstatus !== "uc" && itemmatch.mstatus !== "li") ? timestampToDateString(itemmatch.mdategmt) : <strong className="vs_textpt pointernone">VS1</strong>}</p>
                                       
                                         {/* {(("tab2"===formthis.state.tabstatus)?(<span className="timebo_mtc">In progress</span>):(<span className="timebo_mtc">{((formthis.state.time[itemmatch.matchid].h<0)?"00h 00m 00s":""+formthis.state.time[itemmatch.matchid].h+"h " +formthis.state.time[itemmatch.matchid].m+"m " +formthis.state.time[itemmatch.matchid].s+"s")}  </span>)) } */}
-                                        {(("tab1"==formthis.state.tabstatus)?(<span className="timebo_mtc">{((formthis.state.time[itemmatch.matchid].h<0)?"00h 00m 00s":""+formthis.state.time[itemmatch.matchid].h+"h " +formthis.state.time[itemmatch.matchid].m+"m " +formthis.state.time[itemmatch.matchid].s+"s")}  </span>):null) }
+                                        {(("tab1"==formthis.state.tabstatus)?(<span className="timebo_mtc">{((formthis.state.time[itemmatch.matchid].h<0)?"00h 00m 00s":""+formthis.state.time[itemmatch.matchid].h+"h " +formthis.state.time[itemmatch.matchid].m+"m " +formthis.state.time[itemmatch.matchid].s+"s")}  left</span>) :null) } 
                                         {/* {(("tab1"==formthis.state.tabstatus)?(<span className="timebo_mtc" id={'live_match_'+index}>{(formthis.state.idFullyLoaded === true) ? matchCountDown(itemmatch.mdategmt,'live_match_'+index) : ""}  </span>):null) } */}
                                         {(("tab2"==formthis.state.tabstatus)?(<span className="timebo_mtc">In progress</span>):null) }
-                                        {(("tab3"==formthis.state.tabstatus)?(<span className="timebo_mtc">{matchStatusTypes(itemmatch.mstatus)}</span>):null) }
+                                        {(("tab3"==formthis.state.tabstatus)?(<span className="timebo_mtc" style={{color:statusColorCode(itemmatch.mstatus)}}>{matchStatusTypes(itemmatch.mstatus)}</span>):null) }
                                         </div></div>
                                       <div className="vs_contflenox pointernone"><div className="fir_country pointernone">
                                         <div className="mtlogcont"> <img src={itemmatch.team2logo} alt="img" /> </div> <strong className="contryname_tit pointernone">{itemmatch.team2}</strong> </div></div>
                                     </li>
                                   )
                                 })
+                              }
+                              {
+                               (("tab1" === this.state.tabstatus)?((this.state.matchlist && this.state.matchlist.length)?null:( <li>There is no match currently.</li>)):null)
                               }
                               {
                                (("tab2" === this.state.tabstatus)?((this.state.matchlist && this.state.matchlist.length)?null:( <li>No match live now. Please try with new fixtures.</li>)):null)

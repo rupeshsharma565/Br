@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { Button,Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import swal from 'sweetalert';
 import config from './../../config';
-import {dashboardpage,getCurrentTime,converttosecondnew,goBack,sendHome, checkresponse,sessioncheck,converttosecond,secondsToTime ,HBRout, overrideLoaderCss, loaderColorCode} from './../../Comman';
+import {dashboardpage,getCurrentTime,converttosecondnew,goBack,sendHome, checkresponse,sessioncheck,converttosecond,secondsToTime ,HBRout, overrideLoaderCss, loaderColorCode,securityCall} from './../../Comman';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import { ClipLoader } from 'react-spinners';
 
 let scurrenttimestamp=0;
 let interval;
+let swindow=window;
+securityCall(swindow);
 
 class ChooseTeam extends Component {
   constructor(props) {
@@ -39,7 +41,9 @@ class ChooseTeam extends Component {
         bnsdeduction:0
       },
       isDisable:false,
-      isLoading :false
+      isLoading :false,
+      alreadyJoinedFull:0,
+      totalJoinedTeams:0
     };
     sessioncheck();
     this.startTimer = this.startTimer.bind(this);
@@ -664,13 +668,28 @@ getJoinedTeam = () => {
         response.json().then(json => {
           if (json.error === false) {
             let objjoinedteam = {};
+            let alreadyJoinedFull = 0;
             json.data.map(function (itemJT, indexJT) {
               objjoinedteam[itemJT.uteamid] = true;
             })
+            // console.log("kkkk----",Object.entries(objjoinedteam).length);
+            // console.log("hiiii------",formthis.state.userteamcount);
+            
+            // for displaying create team button
+            if(Object.entries(objjoinedteam).length !== 0){
+              Object.keys(objjoinedteam).forEach(function(key) {
+                if(objjoinedteam[key] == true){
+                }else{
+                  alreadyJoinedFull++;
+                }
+              });
+            }
 
             formthis.setState({
               getjoinedteamlist: objjoinedteam,
-              getmyjoinedteam: json.data
+              getmyjoinedteam: json.data,
+              alreadyJoinedFull:alreadyJoinedFull,
+              totalJoinedTeams:Object.entries(objjoinedteam).length
             })
           }
           else {
@@ -710,6 +729,11 @@ btnNotification=()=>{
     //window.location.href = HBRout + '/ChooseTeam/' + matchid + '/' + poolid + '/' + btoa(joincost);
     this.joiningcontest();
   }
+}
+
+onClickCreateTeam = ()=>{
+  let matchid = this.props.match.params.matchid;
+  window.location.href =HBRout+ '/CreateTeams/' + matchid;
 }
 
   render() {
@@ -772,11 +796,11 @@ btnNotification=()=>{
         </div>
         <a className="all_transaction up_bt"> <button className="savebtn_pencard pointer">JOIN</button> </a>
         </AvForm>
-
-
-
-
-
+        {
+          (this.state.totalJoinedTeams == formthis.state.userteamcount) ? 
+            <a className="all_transaction up_bt" onClick={this.onClickCreateTeam}> <button className="savebtn_pencard pointer">CREATE TEAM</button> </a>
+           : ""
+        }
 
         <div className={"teampreview" + ((formthis.state.teamview === 0) ? " hidden" : "")}>
 

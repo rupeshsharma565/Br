@@ -8,9 +8,12 @@ import React, { Component } from 'react';
 // import refer_code from './../../images/refer_code.svg'
 import { AvForm,AvField } from 'availity-reactstrap-validation';
 import config from './../../config';
-import { checkresponse ,HBRout,validation,goBack,dashboardpage,overrideLoaderCss,loaderColorCode,OTP_TIMEOUT} from './../../Comman';
+import { checkresponse ,HBRout,validation,goBack,dashboardpage,overrideLoaderCss,loaderColorCode,OTP_TIMEOUT,securityCall} from './../../Comman';
 //import swal from 'sweetalert';
 import { ClipLoader } from 'react-spinners';
+
+let swindow=window;
+securityCall(swindow);
 
 class Verifyotp extends Component {
   constructor(props) {
@@ -137,7 +140,7 @@ class Verifyotp extends Component {
     reqapi = api_url + "/resendotp";
 
     var args1 = {
-      username: username,
+      username: atob(username),
       atype:"newreg",
       devicetype:"web",
       devicetoken:"asd46ad46ada4ds"

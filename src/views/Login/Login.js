@@ -10,12 +10,15 @@ import swal from 'sweetalert';
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
 import logo from './../../images/logo.png'
-import { HBRout,dashboardpage, validation,overrideLoaderCss,loaderColorCode} from './../../Comman';
+import { HBRout,dashboardpage, validation,overrideLoaderCss,loaderColorCode,securityCall} from './../../Comman';
 import { futimesSync } from 'fs';
 import { ClipLoader } from 'react-spinners';
 
-
+let swindow=window;
+securityCall(swindow);
 class Login extends Component {
+  
+  //
   constructor(props) {
     super(props);
     this.state = {
@@ -31,6 +34,9 @@ class Login extends Component {
     sessionStorage.clear();
 
     this.toggleMobile = this.toggleMobile.bind(this);
+  
+    
+    
   }
 
   componentDidMount() {    
@@ -242,7 +248,7 @@ class Login extends Component {
             {             
               if(json.code===6)
               {
-                window.location.href ="/#/Verifyotp/"+btoa(gresponse.phone);
+                window.location.href ="/#/Verifyotp/"+gresponse.phone;
               }
               else
               {  
@@ -350,7 +356,7 @@ class Login extends Component {
             { 
               if(json.code===6)
               {
-                window.location.href ="/#/Verifyotp/"+btoa(fresponse.phone);
+                window.location.href ="/#/Verifyotp/"+fresponse.phone;
               }
               else
               {

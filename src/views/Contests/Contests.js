@@ -5,14 +5,15 @@ import {
 } from 'reactstrap';
 import swal from 'sweetalert';
 import config from './../../config';
-import { dashboardpage, getCurrentTime, converttosecondnew, checkresponse, secondsToTime, goBack, sendHome, sessioncheck, HBRout,getConvertoWord,overrideLoaderCss,loaderColorCode,toastMessage } from './../../Comman';
+import { dashboardpage, getCurrentTime, converttosecondnew, checkresponse, secondsToTime, goBack, sendHome, sessioncheck, HBRout,getConvertoWord,overrideLoaderCss,loaderColorCode,toastMessage,securityCall } from './../../Comman';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import { ClipLoader } from 'react-spinners';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 let scurrenttimestamp = 0;
 //let interval;
-
+let swindow=window;
+securityCall(swindow);
 
 class Contests extends Component {
   constructor(props) {

@@ -3,9 +3,12 @@ import {
   Col, Row
 } from 'reactstrap';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
-import { checkresponse,goBack,sendHome,sessioncheck ,HBRout,validation,overrideLoaderCss,loaderColorCode} from './../../Comman';
+import { checkresponse,goBack,sendHome,sessioncheck ,HBRout,validation,overrideLoaderCss,loaderColorCode,securityCall} from './../../Comman';
 import config from './../../config';
 import { ClipLoader } from 'react-spinners';
+
+let swindow=window;
+securityCall(swindow);
 
 class WithdrawCash extends Component {
   constructor(props) {

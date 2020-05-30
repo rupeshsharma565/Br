@@ -1,6 +1,6 @@
 {
-    "name": "chooseprivateteam",
-    "version": "0.0.0",
-    "private": true,
-    "main": "./ChoosePrivateTeam.js"
-  }
+  "name": "ChoosePrivateTeam",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./ChoosePrivateTeam.js"
+}

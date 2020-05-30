@@ -1,0 +1,6 @@
+{
+  "name": "FootballFullScoreCard",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./FootballFullScoreCard.js"
+}

@@ -3,9 +3,12 @@ import {
   Col, Row
 } from 'reactstrap';
 import config from './../../config';
-import {goBack,sendHome, checkresponse,sessioncheck ,HBRout,overrideLoaderCss,loaderColorCode} from './../../Comman';
+import {goBack,sendHome, checkresponse,sessioncheck ,HBRout,overrideLoaderCss,loaderColorCode,securityCall} from './../../Comman';
 import { AvForm } from 'availity-reactstrap-validation';
 import { ClipLoader } from 'react-spinners';
+
+let swindow=window;
+securityCall(swindow);
 
 class MyTeams extends Component {
   constructor(props) {
@@ -22,7 +25,7 @@ class MyTeams extends Component {
       isLoading :false
     };
     sessioncheck();
-
+    this.closeModel=this.closeModel.bind();
   }
 
   componentDidMount() {    
@@ -239,6 +242,9 @@ class MyTeams extends Component {
     window.location.href =HBRout+ '/Home';
   }
 
+  closeModel=()=>{
+    this.setState({teamview:0})
+  }
 
 
   render() {
@@ -321,10 +327,12 @@ class MyTeams extends Component {
 
 
 
-{((formthis.state.userteamcount===formthis.state.teamcountfixed)?null:(<a className="all_transaction up_bt"> 
-<button className="savebtn_pencard pointer" onClick={this.onClickCreateTeam}>{((formthis.state.userteamcount===formthis.state.teamcountfixed)?""+formthis.state.teamcountfixed+" TEAM CREATED":"CREATE TEAM")}{((formthis.state.userteamcount===formthis.state.teamcountfixed)?"":("("+ (formthis.state.userteamcount + 1)+")"))}
-</button> 
-</a>))}
+{((formthis.state.userteamcount===formthis.state.teamcountfixed)?null:(
+ <div className="teamjoint_contestend">
+ <a className="mytems_ategbox" onClick={this.onClickCreateTeam}>{((formthis.state.userteamcount===formthis.state.teamcountfixed)?""+formthis.state.teamcountfixed+" TEAM CREATED":"CREATE TEAM")}{((formthis.state.userteamcount===formthis.state.teamcountfixed)?"":("("+ (formthis.state.userteamcount + 1)+")"))}</a>
+ <a href={HBRout + "/JoinContest/" + matchid} className="joiendctox_ategbox">Joined Contests <span className="myteam_dinivalue"></span></a>
+</div>
+))}
               
               
             </div>
@@ -334,7 +342,7 @@ class MyTeams extends Component {
 
         
         <div className={"teampreview" + ((formthis.state.teamview === 0) ? " hidden" : "")}>
-
+			<div className="teampreviewclosebtn" onClick={formthis.closeModel}> X </div>
           <div className={ "innercontent " + (sessionStorage.getItem('gameid') && sessionStorage.getItem("gameid")==="2" ? "football-ground-image " : "") + (sessionStorage.getItem('gameid') && sessionStorage.getItem("gameid")==="3" ? "kabaddi-ground-image " : "") + "" }>
           <div className="miniextra_groundbd"> 
             {

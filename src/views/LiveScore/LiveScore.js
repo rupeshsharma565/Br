@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import config from './../../config';
-import { goBack,sendHome,checkresponse ,sessioncheck,HBRout, matchFormatTypes, overrideLoaderCss, loaderColorCode} from './../../Comman';
+import { goBack,sendHome,checkresponse ,sessioncheck,HBRout, matchFormatTypes, overrideLoaderCss, loaderColorCode,securityCall} from './../../Comman';
 import Select from 'react-select';
 import { ClipLoader } from 'react-spinners';
 
-class FullScoreCard extends Component {
+let swindow=window;
+securityCall(swindow);
+
+class LiveScore extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -264,8 +267,9 @@ class FullScoreCard extends Component {
                         </div>
                         )})
                         }
-
-
+                        {
+                            (("tab1" === this.state.tabstatus)?((this.state.matchscorelist && this.state.matchscorelist.length)?null:( <p className="text-center">There is no live match currently.</p>)):null)
+                          }
                       </div>
                     </div>
                   </div>
@@ -307,4 +311,4 @@ class FullScoreCard extends Component {
   }
 }
 
-export default FullScoreCard;
+export default LiveScore;

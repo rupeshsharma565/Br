@@ -8,9 +8,12 @@ import React, { Component } from 'react';
 // import refer_code from './../../images/refer_code.svg'
 import { AvForm,AvField} from 'availity-reactstrap-validation';
 import config from './../../config';
-import { checkresponse ,HBRout,dashboardpage,goBack,validation,overrideLoaderCss,loaderColorCode} from './../../Comman';
+import { checkresponse ,HBRout,dashboardpage,goBack,validation,overrideLoaderCss,loaderColorCode,securityCall} from './../../Comman';
 import swal from 'sweetalert';
 import { ClipLoader } from 'react-spinners';
+
+let swindow=window;
+securityCall(swindow);
 
 class LoginOtp extends Component {
   constructor(props) {

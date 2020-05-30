@@ -38,6 +38,7 @@ const PrivacyPolicy = React.lazy(() => import('./views/PrivacyPolicy'));
 const KabaddiFullScoreCard = React.lazy(()=> import('./views/KabaddiFullScoreCard'))
 const FootballFullScoreCard = React.lazy(()=> import('./views/FootballFullScoreCard'))
 const CreatePrivateContest = React.lazy(()=> import('./views/CreatePrivateContest'))
+const Checkout = React.lazy(()=> import('./views/Checkout'))
 
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
@@ -63,7 +64,7 @@ const routes = [
   { path: "/WithdrawlVerify"  ,name:"WithdrawlVerify",component:WithdrawlVerify},
   { path: "/FantasyPointSystem"  ,name:"FantasyPointSystem",component:FantasyPointSystem},
   { path: "/AddCash"  ,name:"AddCash",component:AddCash},
-  { path: "/PaytmCheckout/:orderid/:amount"  ,name:"PaytmCheckout",component:PaytmCheckout},
+  { path: "/Checkout/:payment_method/:orderid/:amount"  ,name:"Checkout",component:PaytmCheckout},
   { path: "/JoinContest/:matchid/:type"  ,name:"JoinContestType",component:JoinContest},
   { path: "/JoinContest/:matchid"  ,name:"JoinContest",component:JoinContest},
   { path: "/ChooseTeam/:matchid/:poolid/:joincost"  ,name:"ChooseTeam",component:ChooseTeam},
@@ -89,7 +90,8 @@ const routes = [
 
   { path: "/More",name:"More",component:More},
   { path: "/PrivacyPolicy",name:"Privacy Policy",component:PrivacyPolicy},
-  { path: "/CreatePrivateContest/:matchid/",name:"Create Private Contest",component:CreatePrivateContest}
+  { path: "/CreatePrivateContest/:matchid/",name:"Create Private Contest",component:CreatePrivateContest},
+  { path: "/RazorpayCheckout/:type/:amount/:promocode",name:"RazorpayCheckout",component:Checkout}
    
 ];
 

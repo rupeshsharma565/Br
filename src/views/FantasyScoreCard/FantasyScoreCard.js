@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import config from './../../config';
-import { goBack,sendHome,checkresponse ,sessioncheck, overrideLoaderCss, loaderColorCode, playerPointKeyConst} from './../../Comman';
+import { goBack,sendHome,checkresponse ,sessioncheck, overrideLoaderCss, loaderColorCode, playerPointKeyConst,securityCall} from './../../Comman';
 import { ClipLoader } from 'react-spinners';
+
+// let swindow=window;
+// securityCall(swindow);
 
 class FantasyScoreCard extends Component {
   constructor(props) {

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import config from './../../config';
-import { goBack,sendHome,checkresponse,sessioncheck ,HBRout} from './../../Comman';
+import { goBack,sendHome,checkresponse,sessioncheck ,HBRout,securityCall} from './../../Comman';
+
+let swindow=window;
+securityCall(swindow);
 
 class MyAccount extends Component {
   constructor(props) {

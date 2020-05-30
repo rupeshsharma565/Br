@@ -1,10 +1,12 @@
 import React, { Component} from 'react';
 import { Progress } from 'reactstrap';
 import config from './../../config';
-import { dashboardpage,getCurrentTime,converttosecondnew,goBack, sendHome, checkresponse, sessioncheck, converttosecond, secondsToTime,endtimeinsecond ,HBRout,timestampToDateTime} from './../../Comman';
+import { dashboardpage,getCurrentTime,converttosecondnew,goBack, sendHome, checkresponse, sessioncheck, converttosecond, secondsToTime,endtimeinsecond ,HBRout,timestampToDateTime,securityCall} from './../../Comman';
 
 import swal from 'sweetalert';
 let scurrenttimestamp=0;
+let swindow=window;
+securityCall(swindow);
 
 class Notification extends Component {
   _isMounted = false;

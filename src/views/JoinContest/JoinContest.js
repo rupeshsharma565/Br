@@ -2,11 +2,13 @@ import React, { Component} from 'react';
 import {Progress, Button,Modal, ModalBody, ModalFooter, ModalHeader,Row,Col } from 'reactstrap';
 import swal from 'sweetalert';
 import config from './../../config';
-import { dashboardpage,getCurrentTime,converttosecondnew,goBack, sendHome, checkresponse, sessioncheck, converttosecond, secondsToTime,endtimeinsecond ,HBRout, overrideLoaderCss, loaderColorCode} from './../../Comman';
+import { dashboardpage,getCurrentTime,converttosecondnew,goBack, sendHome, checkresponse, sessioncheck, converttosecond, secondsToTime,endtimeinsecond ,HBRout, overrideLoaderCss, loaderColorCode,securityCall} from './../../Comman';
 import { ClipLoader } from 'react-spinners';
 
 let scurrenttimestamp=0;
 let interval;
+let swindow=window;
+securityCall(swindow);
 
 class JoinContest extends Component {
   constructor(props) {
@@ -32,11 +34,15 @@ class JoinContest extends Component {
       isNotify:false,
       freeamount:0,
       score_result : {},
-      isLoading: false
+      isLoading: false,
+      isOpened:false,
+      ccode:""
     };
     sessioncheck();
     this.startTimer = this.startTimer.bind(this);
     this.toggleNotification = this.toggleNotification.bind(this);
+    this.shareContestCode = this.shareContestCode.bind(this);
+    this.inviteCodeToggle = this.inviteCodeToggle.bind(this);
   }
 
   
@@ -286,6 +292,9 @@ class JoinContest extends Component {
   setCreateTeam = (event, joincost, poolid) => {
     event.stopPropagation();
     let formthis = this;
+    formthis.setState({
+      isLoading: true
+    });
     let matchid = this.props.match.params.matchid;
     joincost=parseFloat(joincost);
     
@@ -333,7 +342,9 @@ class JoinContest extends Component {
 
 
       });
-
+      formthis.setState({
+        isLoading: false
+      });
     }
     else {
 
@@ -450,6 +461,19 @@ class JoinContest extends Component {
       });
   }
 
+  inviteCodeToggle() {
+    this.setState({
+      isOpened: !this.state.isOpened,
+    });
+  }
+
+  shareContestCode = (ccode)=> {
+    this.setState({
+      isOpened: true,
+      ccode:ccode
+    });
+  }
+
   render() {
     const formthis = this;
     let matchid = this.props.match.params.matchid;
@@ -557,9 +581,14 @@ class JoinContest extends Component {
 
                   this.state.joinlist.map(function (itemPools, indexPools) {
                     return (
-                      <div key={indexPools} className="begings_mian pointer" onClick={() => formthis.openContestDetails(itemPools.poolcontestid,itemPools.iscancel)}>
+                      <div key={indexPools} className="begings_mian pointer">
                         <div className="bignest_boxpart">
-                          <div className="prizepool_ed"><span className="left_prizpool">Prize Pool {(itemPools.iscancel==="1")?(<b className="cancelled">(Cancelled)</b>):null} <p>₹{itemPools.totalwining}</p></span> <span className="right_prizpool">
+                          {
+                            (itemPools.isprivate && itemPools.isprivate ==="1" && itemPools.joinleft > 0 && formthis.state.allowContestToEdit === true) ?
+                            <div className="sharingBox"><p>{ (itemPools.title) ? itemPools.title  : "" }</p><div className="invite-friends" onClick={()=>formthis.shareContestCode(itemPools.ccode)}><i title="Share this contest with your friends" className="fa fa-share-alt"></i></div></div>
+                            : ""
+                          }
+                          <div onClick={() => formthis.openContestDetails(itemPools.poolcontestid,itemPools.iscancel)} className="prizepool_ed"><span className="left_prizpool">Prize Pool {(itemPools.iscancel==="1")?(<b className="cancelled">(Cancelled)</b>):null} <p>₹{itemPools.totalwining}</p></span> <span className="right_prizpool">
                           Entry 
                           {/* <span className="jontedbtn">₹{itemPools.joinfee}</span> */}
                           {((formthis.state.allowContestToEdit===true)?((itemPools.m==="1")?(<button className="jont_oldbtn pointerevent" onClick={(e) => {
@@ -631,6 +660,24 @@ class JoinContest extends Component {
                       
                       </ModalFooter>
                   
+                </Modal>
+
+                <Modal isOpen={this.state.isOpened} toggle={this.inviteCodeToggle}
+                       className={'modal-sm verfypop_enter forconfir_md shareinvite_codemodal'}>
+                       
+                      <ModalHeader toggle={this.inviteCodeToggle}>Contest Invite Code</ModalHeader>
+                      <ModalBody>
+                        <div className="iconlogi_call">
+                        <div className="entr_mdconi">
+                          <p className="invite_codetext_main"><i className="fa fa-coupon"></i> {formthis.state.ccode} </p>
+                        </div>
+                        <div className="entr_mdconi fottopauy"> 
+                        <p className="byjoingebd">Copy and share the contest code with your friends on Facebook, WhatsApp, email or SMS</p>
+                        </div>
+                      </div>
+                  
+                      </ModalBody>
+              
                 </Modal>
         
       </div>

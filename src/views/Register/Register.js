@@ -8,12 +8,15 @@ import google from './../../images/google.svg'
 import refer_code from './../../images/refer_code.svg'
 import { AvForm,AvField } from 'availity-reactstrap-validation';
 import config from './../../config';
-import { checkresponse,HBRout,validation,dashboardpage,overrideLoaderCss,loaderColorCode,OTP_TIMEOUT} from './../../Comman';
+import { checkresponse,HBRout,validation,dashboardpage,overrideLoaderCss,loaderColorCode,OTP_TIMEOUT,securityCall} from './../../Comman';
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
 import swal from 'sweetalert';
 import logo from './../../images/logo.png'
 import { ClipLoader } from 'react-spinners';
+
+let swindow=window;
+securityCall(swindow);
 
 class Register extends Component {
   constructor(props) {

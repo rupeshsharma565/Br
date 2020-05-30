@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import config from './../../config';
-import { getCurrentTime, converttosecondnew, checkresponse, converttosecond, secondsToTime, sessioncheck, goBack, sendHome, mymatchs, HBRout, overrideLoaderCss, loaderColorCode, matchFormatTypes,unCamelCase,upcomingmatchs, timestampToDateString } from './../../Comman';
+import { getCurrentTime, converttosecondnew, checkresponse, converttosecond, secondsToTime, sessioncheck, goBack, sendHome, mymatchs, HBRout, overrideLoaderCss, loaderColorCode, matchFormatTypes,unCamelCase,upcomingmatchs, timestampToDateString,matchStatusTypes, statusColorCode,securityCall } from './../../Comman';
 import { ClipLoader } from 'react-spinners';
 import { css } from '@emotion/core';
 
@@ -10,7 +10,8 @@ let scurrenttimestamp = 0;
 // let interval;
 
 //const Example = () => <UncontrolledCarousel items={itemslist} />;
-
+let swindow=window;
+securityCall(swindow);
 
 class MyMatches extends Component {
   _isMounted = false;
@@ -426,13 +427,16 @@ class MyMatches extends Component {
                                       <p className="match-date">{ (itemmatch.mstatus !== "uc" && itemmatch.mstatus !== "li") ? timestampToDateString(itemmatch.mdategmt) : <strong className="vs_textpt pointernone">VS</strong>}</p>
                                         {(("tab1" === formthis.state.tabstatus) ? (<span className="timebo_mtc">{((formthis.state.time[itemmatch.matchid].h < 0) ? "00h 00m 00s" : "" + formthis.state.time[itemmatch.matchid].h + "h " + formthis.state.time[itemmatch.matchid].m + "m " + formthis.state.time[itemmatch.matchid].s + "s")}  </span>) : null)}
                                         {(("tab2" === formthis.state.tabstatus) ? (<span className="timebo_mtc">In progress</span>) : null)}
-                                        {(("tab3" === formthis.state.tabstatus) ? (<span className="timebo_mtc">Completed</span>) : null)}
+                                {(("tab3" === formthis.state.tabstatus) ? (<span className="timebo_mtc" style={{color:statusColorCode(itemmatch.mstatus)}}>{matchStatusTypes(itemmatch.mstatus)}</span>) : null)}
                                       </div></div>
                                       <div className="vs_contflenox pointernone"><div className="fir_country pointernone">
                                         <img src={itemmatch.team2logo} alt="img" /> <strong className="contryname_tit pointernone">{itemmatch.team2}</strong> </div></div>
                                     </li>
                                   )
                                 })
+                              }
+                              {
+                               (("tab1" === this.state.tabstatus)?((this.state.matchlist && this.state.matchlist.length)?null:( <li>There is no match currently.</li>)):null)
                               }
                              {
                                (("tab2" === this.state.tabstatus)?((this.state.matchlist && this.state.matchlist.length)?null:( <li>No match live now. Please try with new fixtures.</li>)):null)

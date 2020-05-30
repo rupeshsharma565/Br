@@ -3,8 +3,11 @@ import {
   Col, Row
 } from 'reactstrap';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
-import { checkresponse,goBack,sendHome,sessioncheck ,HBRout,validation} from './../../Comman';
+import { checkresponse,goBack,sendHome,sessioncheck ,HBRout,validation,securityCall} from './../../Comman';
+import config from '../../config';
 
+let swindow=window;
+securityCall(swindow);
 class AddCash extends Component {
   constructor(props) {
     super(props);
@@ -34,9 +37,9 @@ class AddCash extends Component {
   createAddCash=()=>{
     if(this.state.amountadded)
     {
-      if(this.state.paymentmodeselected==="paytm")
+      if(this.state.paymentmodeselected==="paytm" || this.state.paymentmodeselected==="razorpay")
       {
-        window.location.href =HBRout+"/PaytmCheckout/"+btoa((Math.random().toString(36).substring(2)).toUpperCase())+"/"+btoa(this.state.amountadded);
+        window.location.href =HBRout+"/Checkout/"+this.state.paymentmodeselected+"/"+btoa((Math.random().toString(36).substring(2)).toUpperCase())+"/"+btoa(this.state.amountadded);
       }
       else
       {
@@ -89,9 +92,15 @@ class AddCash extends Component {
                   <div className="adcash_titalm">Add Cash With</div>
                   <div className="ad_otheratage">
                   {/* Math.floor((Math.random() * 10000000000000000) + 1) */}
-                    <a className={"t_wallet_panel cursor-pointer "+((this.state.paymentmodeselected==="paytm")?"paymentmethodselect":"")} id="paytm" onClick={this.selectPaymentMode}>
+                    {/* <a className={"t_wallet_panel cursor-pointer "+((this.state.paymentmodeselected==="paytm")?"paymentmethodselect":"")} id="paytm" onClick={this.selectPaymentMode}>
                       <div className="img pointernone"><img className="pointernone" src={require("./../../images/debit_card.png")} /></div>
                       <span className="font-bold pointernone" >Paytm </span>
+                      <div className="img pull-right pointernone"><img src={require("./../../images/arrow_right.png")} className="arrow pointernone" /></div>
+                    </a> */}
+
+                    <a className={"t_wallet_panel cursor-pointer "+(config.IS_RAZORPAY===false?"hidden ":" ")+((this.state.paymentmodeselected==="razorpay")?"paymentmethodselect":"")} id="razorpay" onClick={this.selectPaymentMode}>
+                      <div className="img pointernone"><img className="pointernone" src={require("./../../images/razorpay.jpeg")} /></div>
+                      <span className="font-bold pointernone" >Razorpay </span>
                       <div className="img pull-right pointernone"><img src={require("./../../images/arrow_right.png")} className="arrow pointernone" /></div>
                     </a>
                     

@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { goBack, sendHome, checkresponse, pointsname, overrideLoaderCss, loaderColorCode,fantasyPointSystem } from './../../Comman';
+import { goBack, sendHome, checkresponse, pointsname, overrideLoaderCss, loaderColorCode,fantasyPointSystem,securityCall } from './../../Comman';
 import { Collapse, Card } from 'reactstrap';
 import config from './../../config';
 import { ClipLoader } from 'react-spinners';
+
+// let swindow=window;
+// securityCall(swindow);
 
 class FantasyPointSystem extends Component {
   constructor(props) {

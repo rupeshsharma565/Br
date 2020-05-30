@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import configurl from '../../config';
-import { goBack, sendHome, checkresponse, timestampToDate, sessioncheck, validation,OTP_TIMEOUT,overrideLoaderCss,loaderColorCode } from '../../Comman';
+import { goBack, sendHome, checkresponse, timestampToDate, sessioncheck, validation,OTP_TIMEOUT,overrideLoaderCss,loaderColorCode,securityCall } from '../../Comman';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import axios from "axios"
 import config from '../../config';
 import {Button} from "reactstrap";
 import { ClipLoader } from 'react-spinners';
+
+let swindow=window;
+securityCall(swindow);
 
 class WithdrawlVerify extends Component {
   constructor(props) {

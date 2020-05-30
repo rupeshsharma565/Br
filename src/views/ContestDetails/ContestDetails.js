@@ -9,7 +9,7 @@ import {
   AppAside,
 } from '@coreui/react';
 import config from './../../config';
-import { dashboardpage,getCurrentTime,converttosecondnew,checkresponse, sessioncheck, converttosecond, secondsToTime, goBack, sendHome, endtimeinsecond ,HBRout, taxRegulation, unCamelCase, playerPointKeyConst,getConvertoWord, overrideLoaderCss, loaderColorCode} from './../../Comman';
+import { dashboardpage,getCurrentTime,converttosecondnew,checkresponse, sessioncheck, converttosecond, secondsToTime, goBack, sendHome, endtimeinsecond ,HBRout, taxRegulation, unCamelCase, playerPointKeyConst,getConvertoWord, overrideLoaderCss, loaderColorCode,securityCall} from './../../Comman';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import jsPDF from 'jspdf';
 import axios from "axios"
@@ -21,6 +21,8 @@ import { ClipLoader } from 'react-spinners';
 
 let scurrenttimestamp=0;
 let interval;
+let swindow=window;
+securityCall(swindow);
 
 class ContestDetails extends Component {
   constructor(props) {
@@ -71,6 +73,7 @@ class ContestDetails extends Component {
     this.toggleNotification = this.toggleNotification.bind(this);
     this.toggleBreakPoint=this.toggleBreakPoint.bind(this);
     this.togglePlayerPoint=this.togglePlayerPoint.bind(this);
+    this.closeModel=this.closeModel.bind();
   }
 
   componentDidMount() {
@@ -1156,6 +1159,9 @@ class ContestDetails extends Component {
     });
   }
   dropPlayerPoint=(player_name,isplaying,teamColor)=>{
+    if(this.state.seconds > 0){
+      return;
+    }
     $("body").addClass("isPlayerPoint")
     this.setState({
       playerModalClass : true,
@@ -1200,6 +1206,10 @@ class ContestDetails extends Component {
   componentWillUnmount() {
     clearInterval(interval);
     clearTimeout(interval);
+  }
+
+  closeModel=()=>{
+    this.setState({teamview:0})
   }
 
   render() {
@@ -1391,6 +1401,7 @@ class ContestDetails extends Component {
           </div>
 
           <div className={"teampreview" + ((formthis.state.teamview === 0) ? " hidden" : "")}>
+          <div className="teampreviewclosebtn" onClick={formthis.closeModel}> X </div>
             <div className="team-ground-strip">
               
               <Row>

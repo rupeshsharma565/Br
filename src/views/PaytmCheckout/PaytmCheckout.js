@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { goBack, sendHome, sessioncheck ,HBRout,checkresponse,overrideLoaderCss,loaderColorCode} from './../../Comman';
+import { goBack, sendHome, sessioncheck ,HBRout,checkresponse,overrideLoaderCss,loaderColorCode,securityCall} from './../../Comman';
 import {Button} from "reactstrap";
 import config from './../../config';
 import { ClipLoader } from 'react-spinners';
+
+let swindow=window;
+securityCall(swindow);
 
 class PaytmCheckout extends Component {
   constructor(props) {
@@ -32,7 +35,11 @@ class PaytmCheckout extends Component {
       {
         if(this.state.responsePC==="Applied")
         {
-          window.location.href =HBRout+ "/PaytmRedirect/" + atob(this.props.match.params.orderid) + "/" + atob(this.props.match.params.amount)+"/"+ (this.state.txtpromocode);
+          if(this.props.match.params.payment_method === "paytm"){
+            window.location.href =HBRout+ "/PaytmRedirect/" + atob(this.props.match.params.orderid) + "/" + atob(this.props.match.params.amount)+"/"+ (this.state.txtpromocode);
+          } else if(this.props.match.params.payment_method === "razorpay"){
+            window.location.href =HBRout+ "/RazorpayCheckout/razorpay/" + atob(this.props.match.params.amount)+"/"+ btoa(this.state.txtpromocode);
+          }
         }
       }
       else
@@ -42,7 +49,11 @@ class PaytmCheckout extends Component {
     }    
     else
     {
-      window.location.href =HBRout+ "/PaytmRedirect/" + atob(this.props.match.params.orderid) + "/" + atob(this.props.match.params.amount)+"/no";
+      if(this.props.match.params.payment_method === "paytm"){
+        window.location.href =HBRout+ "/PaytmRedirect/" + atob(this.props.match.params.orderid) + "/" + atob(this.props.match.params.amount)+"/no";
+      } else if(this.props.match.params.payment_method === "razorpay"){
+        window.location.href =HBRout+ "/RazorpayCheckout/razorpay/" + atob(this.props.match.params.amount)+"/no";
+      }
     }
   }
 

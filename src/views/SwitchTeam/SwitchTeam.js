@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import config from './../../config';
-import {dashboardpage,getCurrentTime,converttosecondnew,goBack,sendHome, checkresponse, sessioncheck, converttosecond, secondsToTime ,HBRout} from './../../Comman';
+import {dashboardpage,getCurrentTime,converttosecondnew,goBack,sendHome, checkresponse, sessioncheck, converttosecond, secondsToTime ,HBRout,securityCall} from './../../Comman';
 import { AvForm } from 'availity-reactstrap-validation';
 
 let scurrenttimestamp=0;
 let interval;
+let swindow=window;
+securityCall(swindow);
 
 class SwitchTeam extends Component {
   constructor(props) {

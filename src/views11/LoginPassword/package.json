@@ -1,0 +1,6 @@
+{
+  "name": "LoginPassword",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./LoginPassword.js"
+}
