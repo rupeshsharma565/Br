@@ -144,7 +144,7 @@ class Checkout extends Component {
                     "description": "Add money to wallet"
                   },
                   "theme": {
-                    "color": "#F37254"
+                    "color": "#640eb3"
                   }
                 };
                 const rzp1 = new window.Razorpay(options)
