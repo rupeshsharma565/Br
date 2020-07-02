@@ -130,7 +130,7 @@ class Checkout extends Component {
                   "name": `${config.PRODUCT_NAME}`,
                   "order_id":(json.data.rorderid) ? json.data.rorderid :"",
                   "description": "Purchase Description",
-                  "image": "http://brsoftech.com/images/xbr_logo.png.pagespeed.ic.A8EB0yvuOj.webp",
+                  "image": "https://play.11plays.com/assets/img/logo.png",
                   "handler": function (response){
                     var params = response;
                     formthis.doPayment(params);
