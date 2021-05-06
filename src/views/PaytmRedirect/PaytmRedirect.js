@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import config from './../../config'
-import { checkresponse, sessioncheck} from './../../Comman';
+import { checkresponse, sessioncheck } from './../../Comman';
 
 class PaytmRedirect extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      checksum:false
+      checksum: false
     };
     sessioncheck();
   }
@@ -23,19 +23,19 @@ class PaytmRedirect extends Component {
     this.checkSumIntegrate().then(result => {
       if (result !== false) {
         var args1 = {
-          MID: "KEwVzk68823288397743",
+          MID: "qdURhv27172942568806",
           ORDER_ID: (this.props.match.params.orderid),
           CUST_ID: sessionStorage.getItem("username"),
           INDUSTRY_TYPE_ID: "Retail",
           CHANNEL_ID: "WEB",
           TXN_AMOUNT: (this.props.match.params.amount),
           WEBSITE: "WEB_STAGING",
-          CHECKSUMHASH:result,
+          CHECKSUMHASH: result,
           //CALLBACK_URL:"http://192.168.1.74:3000/Home",
-          MSISDN :"7820888883", //Mobile number of customer
+          MSISDN: "9167103769", //Mobile number of customer
           //EMAIL : $EMAIL, //Email ID of customer
-          VERIFIED_BY : "EMAIL", //
-          IS_USER_VERIFIED : "YES"
+          VERIFIED_BY: "EMAIL", //
+          IS_USER_VERIFIED: "YES"
         };
 
         var object = {
@@ -51,7 +51,7 @@ class PaytmRedirect extends Component {
 
         fetch(apiUrl, object)
           .then(function (response) {
-            console.log("response===>>>",response);
+            console.log("response===>>>", response);
             var chkresp = checkresponse("Wrong", response.status, response.message, 2);
             // if (chkresp === true) {
             //   response.json().then(json => {
@@ -67,16 +67,15 @@ class PaytmRedirect extends Component {
             checkresponse("Wrong", false, error.toString(), 0);
           });
       }
-      else
-      {
-        
+      else {
+
       }
     })
   }
 
 
   checkSumIntegrate = () => {
-    let formthis=this;
+    let formthis = this;
     return new Promise(function (resolve, redirect) {
       let arg2 = {
         orderid: (formthis.props.match.params.orderid),
@@ -84,7 +83,7 @@ class PaytmRedirect extends Component {
         //industrytypeid: "Retail",
         //channelid: "WEB",
         txnamount: (formthis.props.match.params.amount),
-        pcode:(formthis.props.match.params.promocode==="no")?"":formthis.props.match.params.promocode
+        pcode: (formthis.props.match.params.promocode === "no") ? "" : formthis.props.match.params.promocode
       }
       var object = {
         method: 'POST',
@@ -101,15 +100,15 @@ class PaytmRedirect extends Component {
 
       fetch(apiUrl, object)
         .then(function (response) {
-          
+
           var chkresp = checkresponse("Wrong", response.status, response.message, 2);
           if (chkresp === true) {
             response.json().then(json => {
-              console.log("json=",json);
+              console.log("json=", json);
               if (json.error === false) {
-                console.log("checkkkkkkkkk-",json.data);
-                
-                formthis.setState({checksum:json.data})
+                console.log("checkkkkkkkkk-", json.data);
+
+                formthis.setState({ checksum: json.data })
                 //sessionStorage.setItem("checksum",json.data);
                 resolve(json.data);
                 //window.location.href =HBRout+"/MyAccount";
@@ -130,46 +129,45 @@ class PaytmRedirect extends Component {
   }
 
 
-  onChange=(e)=>{
+  onChange = (e) => {
     //console.log("e---->>>",e.target)
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if(this.state.checksum.MID &&
-      this.state.checksum.ORDER_ID  &&
-      this.state.checksum.CUST_ID  &&
-      this.state.checksum.INDUSTRY_TYPE_ID  &&
-      this.state.checksum.CHANNEL_ID  &&
-      this.state.checksum.TXN_AMOUNT  &&
-      this.state.checksum.WEBSITE  &&
-      this.state.checksum.CALLBACK_URL  &&
-      this.state.checksum.checksum)
-    {
+    if (this.state.checksum.MID &&
+      this.state.checksum.ORDER_ID &&
+      this.state.checksum.CUST_ID &&
+      this.state.checksum.INDUSTRY_TYPE_ID &&
+      this.state.checksum.CHANNEL_ID &&
+      this.state.checksum.TXN_AMOUNT &&
+      this.state.checksum.WEBSITE &&
+      this.state.checksum.CALLBACK_URL &&
+      this.state.checksum.checksum) {
       document.getElementById('f1').submit();
     }
   }
 
   render() {
     const formthis = this;
-    let PAYTM_TXN_URL=`${config.PAYTM_TXN_URL}`;
-    
+    let PAYTM_TXN_URL = `${config.PAYTM_TXN_URL}`;
+
     return (
       <div>
         <center><h1>Please do not refresh this page...</h1></center>
         <form name="f1" id="f1" method="post" action={PAYTM_TXN_URL}>
-        
-                <input type="hidden" id="MID" name="MID" onBeforeInput={this.onChange} value={this.state.checksum.MID} />
-                <input type="hidden" id="ORDER_ID" name="ORDER_ID" value={this.state.checksum.ORDER_ID} />
-                <input type="hidden" id="CUST_ID" name="CUST_ID" value={this.state.checksum.CUST_ID} />
-                <input type="hidden" id="INDUSTRY_TYPE_ID" name="INDUSTRY_TYPE_ID" value={this.state.checksum.INDUSTRY_TYPE_ID} />
-                <input type="hidden" id="CHANNEL_ID" name="CHANNEL_ID" value={this.state.checksum.CHANNEL_ID} />
-                <input type="hidden" id="TXN_AMOUNT" name="TXN_AMOUNT" value={this.state.checksum.TXN_AMOUNT} />
-                <input type="hidden" id="WEBSITE" name="WEBSITE" value={this.state.checksum.WEBSITE} />
-                <input type="hidden" id="CALLBACK_URL" name="CALLBACK_URL" value={this.state.checksum.CALLBACK_URL} /> 
-                <input type="hidden" id="CHECKSUMHASH" name="CHECKSUMHASH" value={this.state.checksum.checksum} />
-            
-          <input type="submit" id="s1" name="s1" value="Submit" className="hidden"  />
-          
+
+          <input type="hidden" id="MID" name="MID" onBeforeInput={this.onChange} value={this.state.checksum.MID} />
+          <input type="hidden" id="ORDER_ID" name="ORDER_ID" value={this.state.checksum.ORDER_ID} />
+          <input type="hidden" id="CUST_ID" name="CUST_ID" value={this.state.checksum.CUST_ID} />
+          <input type="hidden" id="INDUSTRY_TYPE_ID" name="INDUSTRY_TYPE_ID" value={this.state.checksum.INDUSTRY_TYPE_ID} />
+          <input type="hidden" id="CHANNEL_ID" name="CHANNEL_ID" value={this.state.checksum.CHANNEL_ID} />
+          <input type="hidden" id="TXN_AMOUNT" name="TXN_AMOUNT" value={this.state.checksum.TXN_AMOUNT} />
+          <input type="hidden" id="WEBSITE" name="WEBSITE" value={this.state.checksum.WEBSITE} />
+          <input type="hidden" id="CALLBACK_URL" name="CALLBACK_URL" value={this.state.checksum.CALLBACK_URL} />
+          <input type="hidden" id="CHECKSUMHASH" name="CHECKSUMHASH" value={this.state.checksum.checksum} />
+
+          <input type="submit" id="s1" name="s1" value="Submit" className="hidden" />
+
         </form>
       </div>
     );

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import config from './../../config';
-import { getCurrentTime, converttosecondnew, checkresponse, converttosecond, secondsToTime, sessioncheck, goBack, sendHome, mymatchs, HBRout, overrideLoaderCss, loaderColorCode, matchFormatTypes,unCamelCase,upcomingmatchs, timestampToDateString,matchStatusTypes, statusColorCode,securityCall } from './../../Comman';
+import { getCurrentTime, converttosecondnew, checkresponse, converttosecond, secondsToTime, sessioncheck, goBack, sendHome, mymatchs, HBRout, overrideLoaderCss, loaderColorCode, matchFormatTypes, unCamelCase, upcomingmatchs, timestampToDateString, matchStatusTypes, statusColorCode, securityCall } from './../../Comman';
 import { ClipLoader } from 'react-spinners';
 import { css } from '@emotion/core';
 
@@ -10,7 +10,7 @@ let scurrenttimestamp = 0;
 // let interval;
 
 //const Example = () => <UncontrolledCarousel items={itemslist} />;
-let swindow=window;
+let swindow = window;
 securityCall(swindow);
 
 class MyMatches extends Component {
@@ -28,13 +28,13 @@ class MyMatches extends Component {
       slideimageclass: { 0: "slidebuttonselected" },
       tabstatus: "tab1",
       loading: false,
-      gameTypeList:[],
-      gameid:"1",
+      gameTypeList: [],
+      gameid: "1",
       error: false,
       hasMore: true,
       isLoading: false,
-      page:1,
-      atype:"fixtures"
+      page: 1,
+      atype: "fixtures"
     };
     sessioncheck();
     this.timer = 0;
@@ -46,11 +46,11 @@ class MyMatches extends Component {
 
   componentDidMount() {
     this._isMounted = true;
-    if(this._isMounted){
+    if (this._isMounted) {
       sessioncheck();
       this.setState({ loading: true });
-      let gameid=(sessionStorage.getItem("gameid"))?sessionStorage.getItem("gameid"):"1";
-      sessionStorage.setItem("gameid",gameid);
+      let gameid = (sessionStorage.getItem("gameid")) ? sessionStorage.getItem("gameid") : "1";
+      sessionStorage.setItem("gameid", gameid);
       getCurrentTime().then(resultTimestamp => {
         scurrenttimestamp = resultTimestamp
         this.listMatchesFront(mymatchs["tab1"].key);
@@ -62,7 +62,7 @@ class MyMatches extends Component {
   // Binds our scroll event handler
   scrollMore = () => {
     this._isMounted = true;
-    let forthis=this;
+    let forthis = this;
     const {
       matchlist,
       state: {
@@ -71,7 +71,7 @@ class MyMatches extends Component {
         hasMore,
       },
     } = this;
-    
+
     // Bails early if:
     // * there's an error
     // * it's already loading
@@ -81,16 +81,16 @@ class MyMatches extends Component {
     // Checks that the page has scrolled to the bottom
     if (
       window.innerHeight + document.documentElement.scrollTop
-        === document.documentElement.offsetHeight
+      === document.documentElement.offsetHeight
     ) {
 
       var page_no = this.state.page;
-      page_no     = parseInt(page_no)+1;
-      if(this._isMounted){
+      page_no = parseInt(page_no) + 1;
+      if (this._isMounted) {
         this.setState({
-          page:page_no
-        },()=>{
-          forthis.listMatchesFront(forthis.state.atype,page_no);
+          page: page_no
+        }, () => {
+          forthis.listMatchesFront(forthis.state.atype, page_no);
         })
       }
     }
@@ -109,7 +109,7 @@ class MyMatches extends Component {
         pushtime[itemseconds["matchid"]] = timeLeftVar;
       }, () => {
       })
-      if(formthis._isMounted){
+      if (formthis._isMounted) {
         formthis.setState({
           seconds: pushseconds,
           time: pushtime
@@ -121,7 +121,7 @@ class MyMatches extends Component {
 
 
 
-  listMatchesFront = (atype,page_no=1) => {
+  listMatchesFront = (atype, page_no = 1) => {
     this._isMounted = true;
     var formthis = this;
     formthis.setState({ isLoading: true });
@@ -146,7 +146,7 @@ class MyMatches extends Component {
 
     fetch(apiUrl, object)
       .then(function (response) {
-        if(formthis._isMounted){
+        if (formthis._isMounted) {
           formthis.setState({
             isLoading: false
           });
@@ -154,7 +154,7 @@ class MyMatches extends Component {
         var chkresp = checkresponse("Wrong", response.status, response.message, 2);
         if (chkresp === true) {
           response.json().then(json => {
-            if(formthis._isMounted){
+            if (formthis._isMounted) {
               formthis.setState({ loading: false });
             }
             if (json.error === false) {
@@ -172,18 +172,18 @@ class MyMatches extends Component {
                 clearInterval(formthis.interval);
                 formthis.startTimer();
               }
-              if(formthis._isMounted){
+              if (formthis._isMounted) {
                 formthis.setState({
                   //matchlist: json.data,
                   seconds: pushseconds,
                   time: pushtime
                 })
               }
-              
+
               // Creates a massaged array of user data
               const nextPageRecord = json.data;
               // Merges the next record into our existing record
-              if(formthis._isMounted){
+              if (formthis._isMounted) {
                 formthis.setState({
                   // Note: Depending on the API you're using, this value may be
                   // returned as part of the payload to indicate that there is no
@@ -201,7 +201,7 @@ class MyMatches extends Component {
               // formthis.setState({
               //   matchlist: []
               // })
-              if(formthis._isMounted){
+              if (formthis._isMounted) {
                 formthis.setState({
                   hasMore: false,
                   isLoading: false
@@ -211,7 +211,7 @@ class MyMatches extends Component {
           })
         }
       }).catch(error => {
-        if(formthis._isMounted){
+        if (formthis._isMounted) {
           formthis.setState({
             isLoading: false
           });
@@ -239,29 +239,28 @@ class MyMatches extends Component {
   }
 
   onClickActive = (e) => {
-    let formthis=this;
+    let formthis = this;
     var atype = "fixtures";
     this.listMatchesFront(mymatchs[e.target.id].key);
-    this.setState({ tabstatus: e.target.id,matchlist:[] },()=>{
-      if(formthis.state.tabstatus==="tab1")
-      {
+    this.setState({ tabstatus: e.target.id, matchlist: [] }, () => {
+      if (formthis.state.tabstatus === "tab1") {
         atype = "fixtures";
         clearInterval(formthis.interval);
         formthis.startTimer();
-      } else if(formthis.state.tabstatus==="tab2"){
+      } else if (formthis.state.tabstatus === "tab2") {
         atype = "live";
         clearInterval(formthis.interval);
-      } else if(formthis.state.tabstatus==="tab3"){
+      } else if (formthis.state.tabstatus === "tab3") {
         atype = "results";
         clearInterval(formthis.interval);
       }
       this.setState({ atype: atype })
     });
   }
-  onclickGame(e){
-    let formthis=this;
-    sessionStorage.setItem("gameid",e);
-    this.setState({gameid:e,tabstatus:"tab1",matchlist:[]},()=>{
+  onclickGame(e) {
+    let formthis = this;
+    sessionStorage.setItem("gameid", e);
+    this.setState({ gameid: e, tabstatus: "tab1", matchlist: [] }, () => {
       formthis.listMatchesFront(mymatchs["tab1"].key);
     });
   }
@@ -269,12 +268,12 @@ class MyMatches extends Component {
   getGameTypes = () => {
     this._isMounted = true;
     var formthis = this;
-    if(this._isMounted){
+    if (this._isMounted) {
       formthis.setState({
         isLoading: true
       });
     }
-    
+
     var object = {
       method: 'GET',
       headers: {
@@ -287,7 +286,7 @@ class MyMatches extends Component {
     var apiUrl = "";
     apiUrl = api_url + "/getgametype";
 
-    if(formthis._isMounted){
+    if (formthis._isMounted) {
       formthis.setState({
         gameTypeList: []
       })
@@ -295,7 +294,7 @@ class MyMatches extends Component {
 
     fetch(apiUrl, object)
       .then(function (response) {
-        if(formthis._isMounted){
+        if (formthis._isMounted) {
           formthis.setState({
             isLoading: false
           });
@@ -304,7 +303,7 @@ class MyMatches extends Component {
         if (chkresp === true) {
           response.json().then(json => {
             if (json.error === false) {
-              if(formthis._isMounted){
+              if (formthis._isMounted) {
                 formthis.setState({
                   gameTypeList: json.data
                 })
@@ -312,7 +311,7 @@ class MyMatches extends Component {
 
             }
             else {
-              if(formthis._isMounted){
+              if (formthis._isMounted) {
                 formthis.setState({
                   gameTypeList: []
                 })
@@ -321,7 +320,7 @@ class MyMatches extends Component {
           })
         }
       }).catch(error => {
-        if(formthis._isMounted){
+        if (formthis._isMounted) {
           formthis.setState({
             isLoading: false
           });
@@ -334,7 +333,7 @@ class MyMatches extends Component {
     clearTimeout(this.interval);
     this._isMounted = false;
   }
-  
+
   render() {
     const formthis = this;
     const {
@@ -373,25 +372,25 @@ class MyMatches extends Component {
               {/* <div className="hd_right"><a className="hd_notification" style={{}} />
 
               </div> */}
-                <div className="hd_right">
-              <a href={HBRout +"/MyAccount"} className="hd_wallet" />
+              <div className="hd_right">
+                <a href={HBRout + "/MyAccount"} className="hd_wallet" />
               </div>
             </div>
             <div className="home_threetabspart">
               {/*Horizontal Tab*/}
               <div className="tab_area home_nttabsbox">
                 <ul className="nav nav-pills">
-                { (formthis.state.gameTypeList && formthis.state.gameTypeList.length ) ? 
-                      formthis.state.gameTypeList.map(function(item,index){
-                        return(<li key={index} className={(formthis.state.gameid===item.id)?"active":""} onClick={()=>formthis.onclickGame(item.id)}>
-                            <a data-toggle="tab">{(item.gname) ? unCamelCase(item.gname) : ""} 
-                              <span className="img_iconssport">
-                                <img src={item.icon} alt="image" />
-                              </span>
-                            </a>
-                          </li>
-                        )
-                      })
+                  {(formthis.state.gameTypeList && formthis.state.gameTypeList.length) ?
+                    formthis.state.gameTypeList.map(function (item, index) {
+                      return (<li key={index} className={(formthis.state.gameid === item.id) ? "active" : ""} onClick={() => formthis.onclickGame(item.id)}>
+                        <a data-toggle="tab">{(item.gname) ? unCamelCase(item.gname) : ""}
+                          <span className="img_iconssport">
+                            <img src={item.icon} alt="image" />
+                          </span>
+                        </a>
+                      </li>
+                      )
+                    })
                     : ""
 
                   }
@@ -422,12 +421,12 @@ class MyMatches extends Component {
                                       <span className="match_series_name">{(itemmatch.seriesname) ? itemmatch.seriesname : ""}</span>
                                       <div className="mt_starnamen pointernone"><div className="fir_country pointernone">
                                         <img src={itemmatch.team1logo} alt="img" /> <strong className="contryname_tit pointernone">{itemmatch.team1}</strong> </div></div>
-                                      <div className="details_mtover pointernone"><div className="teams_f_center_panel pointernone"><p className="leage_ntname">{matchFormatTypes(itemmatch.mtype)}</p> 
-                                      {/* <strong className="vs_textpt pointernone">VS</strong> */}
-                                      <p className="match-date">{ (itemmatch.mstatus !== "uc" && itemmatch.mstatus !== "li") ? timestampToDateString(itemmatch.mdategmt) : <strong className="vs_textpt pointernone">VS</strong>}</p>
+                                      <div className="details_mtover pointernone"><div className="teams_f_center_panel pointernone"><p className="leage_ntname">{matchFormatTypes(itemmatch.mtype)}</p>
+                                        {/* <strong className="vs_textpt pointernone">VS</strong> */}
+                                        <p className="match-date">{(itemmatch.mstatus !== "uc" && itemmatch.mstatus !== "li") ? timestampToDateString(itemmatch.mdategmt) : <strong className="vs_textpt pointernone">VS</strong>}</p>
                                         {(("tab1" === formthis.state.tabstatus) ? (<span className="timebo_mtc">{((formthis.state.time[itemmatch.matchid].h < 0) ? "00h 00m 00s" : "" + formthis.state.time[itemmatch.matchid].h + "h " + formthis.state.time[itemmatch.matchid].m + "m " + formthis.state.time[itemmatch.matchid].s + "s")}  </span>) : null)}
                                         {(("tab2" === formthis.state.tabstatus) ? (<span className="timebo_mtc">In progress</span>) : null)}
-                                {(("tab3" === formthis.state.tabstatus) ? (<span className="timebo_mtc" style={{color:statusColorCode(itemmatch.mstatus)}}>{matchStatusTypes(itemmatch.mstatus)}</span>) : null)}
+                                        {(("tab3" === formthis.state.tabstatus) ? (<span className="timebo_mtc" style={{ color: statusColorCode(itemmatch.mstatus) }}>{matchStatusTypes(itemmatch.mstatus)}</span>) : null)}
                                       </div></div>
                                       <div className="vs_contflenox pointernone"><div className="fir_country pointernone">
                                         <img src={itemmatch.team2logo} alt="img" /> <strong className="contryname_tit pointernone">{itemmatch.team2}</strong> </div></div>
@@ -436,24 +435,24 @@ class MyMatches extends Component {
                                 })
                               }
                               {
-                               (("tab1" === this.state.tabstatus)?((this.state.matchlist && this.state.matchlist.length)?null:( <li>There is no match currently.</li>)):null)
-                              }
-                             {
-                               (("tab2" === this.state.tabstatus)?((this.state.matchlist && this.state.matchlist.length)?null:( <li>No match live now. Please try with new fixtures.</li>)):null)
+                                (("tab1" === this.state.tabstatus) ? ((this.state.matchlist && this.state.matchlist.length) ? null : (<li>There is no match currently.</li>)) : null)
                               }
                               {
-                               (("tab3" === this.state.tabstatus)?((this.state.matchlist && this.state.matchlist.length)?null:( <li>No result. Please try with new fixtures.</li>)):null)
+                                (("tab2" === this.state.tabstatus) ? ((this.state.matchlist && this.state.matchlist.length) ? null : (<li>No match live now. Please try with new fixtures.</li>)) : null)
+                              }
+                              {
+                                (("tab3" === this.state.tabstatus) ? ((this.state.matchlist && this.state.matchlist.length) ? null : (<li>No result. Please try with new fixtures.</li>)) : null)
                               }
 
-                            <hr />
-                            {error &&
-                              <li style={{ color: '#900' }}>
-                                {error}
-                              </li>
-                            }
-                            {isLoading &&
-                              <li>Loading...</li>
-                            }
+                              <hr />
+                              {error &&
+                                <li style={{ color: '#900' }}>
+                                  {error}
+                                </li>
+                              }
+                              {isLoading &&
+                                <li>Loading...</li>
+                              }
 
                             </ul>
 

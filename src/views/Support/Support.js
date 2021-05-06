@@ -8,18 +8,20 @@ class Support extends Component {
     super(props);
     this.state = {
       collapse: [],
-      supportData:{}
+      supportData:{},
     };    
     //sessioncheck();
     this.toggle = this.toggle.bind(this);
+    
   }
 
 
   componentDidMount() {    
     //sessioncheck();
-   this.getSupportData();
+   //this.getSupportData();
   } 
 
+  /*
   getSupportData = () => {
     this._isMounted = true;
     var formthis = this;
@@ -40,6 +42,7 @@ class Support extends Component {
     formthis.setState({
       supportData: {}
     })
+
 
     fetch(apiUrl, object)
       .then(function (response) {
@@ -67,6 +70,7 @@ class Support extends Component {
         checkresponse("Wrong", false, error.toString(), 0);
       });
   }
+  */
 
   toggle(e) {
     let collapse=this.state.collapse;
@@ -92,8 +96,8 @@ class Support extends Component {
             <div className="support_pagecss">
               <div className="bank"><img src={require("./../../images/support_icon.png")} /></div>
               <div className="support_info"><h2>Our Customer Support is Available 24*7</h2></div>
-              <div className="support_info"><p>Email: {(formthis.state.supportData && formthis.state.supportData.config) ? formthis.state.supportData.config.common.supportemail : ""}</p><div className="col-12 text-center">
-              <a className="g_button marTB30" target="_top" href={(formthis.state.supportData && formthis.state.supportData.config) ? "mailto:"+formthis.state.supportData.config.common.supportemail : ""}>TAP HERE TO E-MAIL US</a>
+              <div className="support_info"><p>Email: {config.SUPPORT_EMAIL}</p><div className="col-12 text-center">
+              {/* <a className="g_button marTB30" target="_top" href={"mailto:"+config.SUPPORT_EMAIL}>TAP HERE TO E-MAIL US</a> */}
               </div></div>
             </div>
             {(formthis.state.supportData && formthis.state.supportData.config && formthis.state.supportData.config.common.supportphone) ? 

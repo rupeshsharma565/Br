@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import config from './../../config';
-import { checkresponse, sessioncheck,sendHome,timestampToDateTime } from './../../Comman';
+import { checkresponse, sessioncheck, sendHome, timestampToDateTime } from './../../Comman';
 
 class PaytmResponse extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      transactiondetail:{}
+      transactiondetail: {}
     };
     sessioncheck();
   }
@@ -22,7 +22,7 @@ class PaytmResponse extends Component {
     var orderid = this.props.match.params.orderid;
     //var txid = this.props.match.params.txid;
     var args1 = {
-      orderid:orderid
+      orderid: orderid
     };
     var object = {
       method: 'POST',
@@ -49,7 +49,7 @@ class PaytmResponse extends Component {
             }
             else {
               formthis.setState({
-                transactiondetail: {status:"TXN_FAILED"}
+                transactiondetail: { status: "TXN_FAILED" }
               })
             }
           })
@@ -63,57 +63,57 @@ class PaytmResponse extends Component {
   render() {
     return (
       <div className="fadeIn">
-      <div className="left_logincontent profilepadding0">
-        <div className="background-cover ng-scope">
-          <div className="header_bg">
-            <div className="hd_left"> 
+        <div className="left_logincontent profilepadding0">
+          <div className="background-cover ng-scope">
+            <div className="header_bg">
+              <div className="hd_left">
                 <a onClick={sendHome} className="hd_home" />
+              </div>
+              <div className="hd_center">Transction Detail</div>
+
             </div>
-            <div className="hd_center">Transction Detail</div>
-            
-          </div>
             <div className="customerid_main">
-              
 
-              {(this.state.transactiondetail.status==="TXN_SUCCESS")?(<div>
+
+              {(this.state.transactiondetail.status === "TXN_SUCCESS") ? (<div>
                 <div className="customerleft">
-                <ul><li>Customer Name :</li><li>{sessionStorage.getItem("username")}</li></ul>
-              </div>
-              <div className="customerleft">
-                <ul><li>Transction Id :</li><li>{this.props.match.params.txid}</li></ul>
-              </div>
-              <div className="customerleft">
-                <ul><li>Order Id :</li><li>{this.props.match.params.orderid}</li></ul>
-              </div>
+                  <ul><li>Customer Name :</li><li>{sessionStorage.getItem("username")}</li></ul>
+                </div>
+                <div className="customerleft">
+                  <ul><li>Transction Id :</li><li>{this.props.match.params.txid}</li></ul>
+                </div>
+                <div className="customerleft">
+                  <ul><li>Order Id :</li><li>{this.props.match.params.orderid}</li></ul>
+                </div>
 
                 <div className="customerleft">
-                <ul><li>Status :</li><li>{this.state.transactiondetail.status}</li></ul>
-              </div>
-              <div className="customerleft">
-                <ul><li>Payment Mode :</li><li>{this.state.transactiondetail.pmode}</li></ul>
-              </div>
-              <div className="customerleft">
-                <ul><li>Amount :</li><li>{this.state.transactiondetail.amount}</li></ul>
-              </div>
-              <div className="customerleft">
-                <ul><li>Date :</li><li>{timestampToDateTime(this.state.transactiondetail.txdate)}</li></ul>
-              </div></div>):
-              (<div>
+                  <ul><li>Status :</li><li>{this.state.transactiondetail.status}</li></ul>
+                </div>
                 <div className="customerleft">
-                <ul><li>Customer Name :</li><li>{sessionStorage.getItem("username")}</li></ul>
-              </div>
-              <div className="customerleft">
-                <ul><li>Transction Id :</li><li>{this.props.match.params.txid}</li></ul>
-              </div>
+                  <ul><li>Payment Mode :</li><li>{this.state.transactiondetail.pmode}</li></ul>
+                </div>
                 <div className="customerleft">
-                <ul><li>Status :</li><li>{this.state.transactiondetail.status}</li></ul>
-              </div></div>)}
+                  <ul><li>Amount :</li><li>{this.state.transactiondetail.amount}</li></ul>
+                </div>
+                <div className="customerleft">
+                  <ul><li>Date :</li><li>{timestampToDateTime(this.state.transactiondetail.txdate)}</li></ul>
+                </div></div>) :
+                (<div>
+                  <div className="customerleft">
+                    <ul><li>Customer Name :</li><li>{sessionStorage.getItem("username")}</li></ul>
+                  </div>
+                  <div className="customerleft">
+                    <ul><li>Transction Id :</li><li>{this.props.match.params.txid}</li></ul>
+                  </div>
+                  <div className="customerleft">
+                    <ul><li>Status :</li><li>{this.state.transactiondetail.status}</li></ul>
+                  </div></div>)}
             </div>
 
 
+          </div>
         </div>
-      </div>	
-    </div>
+      </div>
     );
   }
 }

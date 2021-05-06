@@ -132,7 +132,7 @@ class FantasyScoreCard extends Component {
           />
         </div>
         {/** loader section end */}
-      <div className="left_logincontent profilepadding0">
+      <div className={"left_logincontent "+((this.state.isLoading === true) ? "profilepadding0" : " profilepadding_mobile")}>
         <div className="background-cover ng-scope">
           <div className={"header_bg"+ ((showheader===true)?" hidden":"")}>
             <div className="hd_left"> 

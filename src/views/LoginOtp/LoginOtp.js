@@ -6,13 +6,13 @@ import React, { Component } from 'react';
 // import facebook from './../../images/facebook.svg'
 // import google from './../../images/google.svg'
 // import refer_code from './../../images/refer_code.svg'
-import { AvForm,AvField} from 'availity-reactstrap-validation';
+import { AvForm, AvField } from 'availity-reactstrap-validation';
 import config from './../../config';
-import { checkresponse ,HBRout,dashboardpage,goBack,validation,overrideLoaderCss,loaderColorCode,securityCall} from './../../Comman';
+import { checkresponse, HBRout, dashboardpage, goBack, validation, overrideLoaderCss, loaderColorCode, securityCall } from './../../Comman';
 import swal from 'sweetalert';
 import { ClipLoader } from 'react-spinners';
 
-let swindow=window;
+let swindow = window;
 securityCall(swindow);
 
 class LoginOtp extends Component {
@@ -21,8 +21,8 @@ class LoginOtp extends Component {
     this.state = {
       username: '',
       otp: '',
-      resetpassword:'',
-      isLoading :false
+      resetpassword: '',
+      isLoading: false
     }
   }
 
@@ -31,7 +31,7 @@ class LoginOtp extends Component {
   }
 
   LoginPage = () => {
-    window.location.href =HBRout+ '/';
+    window.location.href = HBRout + '/';
   }
 
   onSubmit = (e) => {
@@ -39,61 +39,57 @@ class LoginOtp extends Component {
     var username = atob(this.props.match.params.username);
     var otp = (this.state.otp) ? this.state.otp.toString() : "";
 
-    if(username!=="" && otp!=="")
-    {
+    if (username !== "" && otp !== "") {
       formthis.setState({
         isLoading: true
       });
-      var getusersobj={ 
+      var getusersobj = {
         method: 'POST',
         headers: new Headers({
-          'Content-Type': 'application/json'                 
+          'Content-Type': 'application/json'
         }),
         body: JSON.stringify({
-          "username" :username,
-          "otp" :otp,
-           devicetoken:'asd46ad46ada4ds',
-           devicetype:'web',
+          "username": username,
+          "otp": otp,
+          devicetoken: 'asd46ad46ada4ds',
+          devicetype: 'web',
         })
-      }    
-      var api_url=`${config.API_URL}`;
-         
-      fetch(api_url+'/userlogin', getusersobj)
-        .then(function(response){
+      }
+      var api_url = `${config.API_URL}`;
+
+      fetch(api_url + '/userlogin', getusersobj)
+        .then(function (response) {
           formthis.setState({
             isLoading: false
           });
-          if(response.status!==200)
-          {
+          if (response.status !== 200) {
             swal({
               title: "Wrong!",
               text: "Somthing went wrong.",
               icon: "error",
             });
           }
-          
-          response.json().then(json=>{
-              if(json.error===false)
-              {               
-                sessionStorage.clear();
-                sessionStorage.setItem("username",json.data.userinfo.email);
-                sessionStorage.setItem("profilepic",json.data.userinfo.profilepic);
-                //sessionStorage.setItem("token",json.data.token);
-                sessionStorage.setItem("jwt",json.data.token);
-                sessionStorage.setItem("refercode",json.data.refercode);
-                sessionStorage.setItem("id",json.data.id);
-                window.location.href =dashboardpage;
-              }
-              else
-              {
-                  swal({
-                    title: "Wrong!",
-                    text: json.msg,
-                    icon: "error",
-                  });
-              }
+
+          response.json().then(json => {
+            if (json.error === false) {
+              sessionStorage.clear();
+              sessionStorage.setItem("username", json.data.userinfo.email);
+              sessionStorage.setItem("profilepic", json.data.userinfo.profilepic);
+              //sessionStorage.setItem("token",json.data.token);
+              sessionStorage.setItem("jwt", json.data.token);
+              sessionStorage.setItem("refercode", json.data.refercode);
+              sessionStorage.setItem("id", json.data.id);
+              window.location.href = dashboardpage;
+            }
+            else {
+              swal({
+                title: "Wrong!",
+                text: json.msg,
+                icon: "error",
+              });
+            }
           })
-            
+
 
 
         }).catch(error => {
@@ -104,19 +100,18 @@ class LoginOtp extends Component {
             title: "Wrong!",
             text: error.toString(),
             icon: "error",
-          });          
+          });
         });
-        
-      }
-      else
-      {
-        swal({
-              title: "Required!",
-              text: "Please enter OTP!",
-              icon: "warning",
-            });
-      }
-   
+
+    }
+    else {
+      swal({
+        title: "Required!",
+        text: "Please enter OTP!",
+        icon: "warning",
+      });
+    }
+
   }
 
 
@@ -132,9 +127,9 @@ class LoginOtp extends Component {
 
     var args1 = {
       username: username,
-      atype:"forget",
-      devicetype:"web",
-      devicetoken:"asd46ad46ada4ds"
+      atype: "forget",
+      devicetype: "web",
+      devicetoken: "asd46ad46ada4ds"
     };
     var object = {
       method: 'POST',
@@ -154,7 +149,7 @@ class LoginOtp extends Component {
         if (chkresp === true) {
           response.json().then(json => {
             if (json.error === false) {
-               checkresponse("Success", 200, json.msg, 1);
+              checkresponse("Success", 200, json.msg, 1);
               // window.location.href =HBRout+ '/';
             }
             else {
@@ -169,7 +164,7 @@ class LoginOtp extends Component {
         });
         checkresponse("Wrong", false, error.toString(), 0);
       });
-    
+
   }
 
 
@@ -198,25 +193,24 @@ class LoginOtp extends Component {
 
             ENTER OTP</div>
           <div className="otpvar_fiy" >
-          <AvForm onValidSubmit={this.onSubmit}>
-          <div className="form-group">
-              <AvField type="text" name="otp" name="otp" value={this.state.otp} onChange={this.onChange} className="form-control" placeholder="OTP *" 
-              validate={{
-                required: { value: true, errorMessage: "Mobile otp is required" },
-                pattern: { value: validation.username, errorMessage: 'Please enter valid otp' },
-                maxLength: { value: 6, errorMessage: 'Your otp must be 6 digits' },
-                minLength: { value: 6, errorMessage: 'Your otp must be 6 digits' }
-              }}/>
-            </div>
-            <div className="form-group">
-              <span className="pointer resand_otnewbs" onClick={this.resendOTP}>Resend OTP</span>
-            </div>
-            
-            <div className="sec_btn">
-              <button type="submit" className="btn blue_btn">VERIFY OTP</button>
-            </div>
-          </AvForm>
-        </div>
+            <AvForm onValidSubmit={this.onSubmit}>
+              <div className="form-group">
+                <AvField type="text" name="otp" name="otp" value={this.state.otp} onChange={this.onChange} className="form-control" placeholder="OTP *"
+                  validate={{
+                    required: { value: true, errorMessage: "Mobile otp is required" },
+                    pattern: { value: validation.username, errorMessage: 'Please enter valid otp' },
+                    maxLength: { value: 6, errorMessage: 'Your otp must be 6 digits' },
+                    minLength: { value: 6, errorMessage: 'Your otp must be 6 digits' }
+                  }} />
+              </div>
+              <div className="form-group">
+                <span className="pointer resand_otnewbs" onClick={this.resendOTP}>Resend OTP</span>
+              </div>
+              <div className="sec_btn">
+                <button type="submit" className="btn blue_btn">VERIFY OTP</button>
+              </div>
+            </AvForm>
+          </div>
         </div>
       </div>
     );

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import config from './../../config';
-import { goBack, sendHome, checkresponse, timestampToDate, validation, sessioncheck,HBRout,securityCall } from './../../Comman';
+import { goBack, sendHome, checkresponse, timestampToDate, validation, sessioncheck, HBRout, securityCall } from './../../Comman';
 import Select from 'react-select';
 import axios from 'axios';
 
-let swindow=window;
+let swindow = window;
 securityCall(swindow);
 
 class MyProfile extends Component {
@@ -23,12 +23,12 @@ class MyProfile extends Component {
       secondaryemail: "",
       sstate: "",
       teamname: "",
-      istnameedit:"1",
+      istnameedit: "1",
       phone: "",
       email: "",
       statelist: [],
       openclosechangepassword: false,
-      profilepicfile:{}
+      profilepicfile: {}
     };
     sessioncheck();
   }
@@ -43,20 +43,20 @@ class MyProfile extends Component {
   updateProfile = () => {
     var formthis = this;
     const formData = new FormData();
-      formData.append('teamname', formthis.state.teamname);
-      formData.append('gender', formthis.state.gender);
-      formData.append('dob', formthis.state.dob);
-      formData.append('email', formthis.state.email);
-      formData.append('address', formthis.state.address);
-      formData.append('state', formthis.state.sstate);
-      formData.append('city', formthis.state.city);
+    formData.append('teamname', formthis.state.teamname);
+    formData.append('gender', formthis.state.gender);
+    formData.append('dob', formthis.state.dob);
+    formData.append('email', formthis.state.email);
+    formData.append('address', formthis.state.address);
+    formData.append('state', formthis.state.sstate);
+    formData.append('city', formthis.state.city);
 
-      formData.append('profilepic', formthis.state.profilepicfile);
-      formData.append('name', formthis.state.name);
+    formData.append('profilepic', formthis.state.profilepicfile);
+    formData.append('name', formthis.state.name);
 
-      var api_url = `${config.API_URL}`;
-      var apiUrl = "";
-      apiUrl = api_url + "/frontapi/userprofile";
+    var api_url = `${config.API_URL}`;
+    var apiUrl = "";
+    apiUrl = api_url + "/frontapi/userprofile";
 
     // var object = {
     //   method: 'POST',
@@ -66,7 +66,7 @@ class MyProfile extends Component {
     //   },
     //   body: JSON.stringify(args1)
     // }
-    
+
     // fetch(apiUrl, object)
     //   .then(function (response) {
     //     var chkresp = checkresponse("Wrong", response.status, response.message, 2);
@@ -84,35 +84,35 @@ class MyProfile extends Component {
     //     checkresponse("Wrong", false, error.toString(), 0);
     //   });
 
-      //////////////////////////
-      const configdata = {
-        headers: {
-          'content-type': 'multipart/form-data',
-          Authorization: 'Bearer ' + sessionStorage.getItem('jwt') + ''
-        }
-      };
-      axios
-        .post(apiUrl, formData, configdata)
-        .then(response => {
+    //////////////////////////
+    const configdata = {
+      headers: {
+        'content-type': 'multipart/form-data',
+        Authorization: 'Bearer ' + sessionStorage.getItem('jwt') + ''
+      }
+    };
+    axios
+      .post(apiUrl, formData, configdata)
+      .then(response => {
 
-          if (response.data.error === false) {
-            formthis.getProfile();
-            checkresponse("Save", 200, response.data.msg, 1);
-          }
-          else {
-            checkresponse("Warning", false, response.data.msg, 3);
-          }
-          // if (response.data.code === 0) {
-          //   this.setState({ 
-          //         playerImage: response.data.data[0] ,
-          //         playerImageURL: CONST.BACKEND_URL +"/uploads/players/"+response.data.data[0] ,
-          //     });
-          //   console.log('response.',response.data.data);
-          // } else {
-          //   alert('Error to upload image');
-          // }
-        })
-        .catch(error => {});
+        if (response.data.error === false) {
+          formthis.getProfile();
+          checkresponse("Save", 200, response.data.msg, 1);
+        }
+        else {
+          checkresponse("Warning", false, response.data.msg, 3);
+        }
+        // if (response.data.code === 0) {
+        //   this.setState({ 
+        //         playerImage: response.data.data[0] ,
+        //         playerImageURL: CONST.BACKEND_URL +"/uploads/players/"+response.data.data[0] ,
+        //     });
+        //   console.log('response.',response.data.data);
+        // } else {
+        //   alert('Error to upload image');
+        // }
+      })
+      .catch(error => { });
   }
 
 
@@ -142,18 +142,17 @@ class MyProfile extends Component {
               let genderck = {};
               genderck[json.data.gender] = true;
 
-              let ppic=api_url+"/uploads/icons/dummy-user.png";
-              if(json.data.profilepic)
-              {
-                ppic=json.data.profilepic;
+              let ppic = api_url + "/uploads/icons/dummy-user.png";
+              if (json.data.profilepic) {
+                ppic = json.data.profilepic;
               }
-              sessionStorage.setItem("profilepic",ppic);
+              sessionStorage.setItem("profilepic", ppic);
 
               formthis.setState({
                 phone: json.data.phone,
                 email: json.data.email,
                 teamname: json.data.teamname,
-                istnameedit:json.data.istnameedit,
+                istnameedit: json.data.istnameedit,
                 gender: json.data.gender,
                 genderck: genderck,
                 dob: (json.data.dob) ? timestampToDate(json.data.dob) : json.data.dob,
@@ -257,7 +256,7 @@ class MyProfile extends Component {
         password: formthis.state.newpassword,
         //conformpassword:formthis.state.conformpassword
       };
-      
+
       var object = {
         method: 'POST',
         headers: {
@@ -301,12 +300,10 @@ class MyProfile extends Component {
     }
   }
 
- 
-  handleChangeFile(selectorFiles)
-  {
-    if(selectorFiles && selectorFiles.length>0)
-    {
-      
+
+  handleChangeFile(selectorFiles) {
+    if (selectorFiles && selectorFiles.length > 0) {
+
       this.setState({ profilepicfile: selectorFiles[0] });
     }
   }
@@ -337,10 +334,10 @@ class MyProfile extends Component {
                         </span>
                         <span className="idusrimgv bhads_moahed">
                           <img src={require("./../../images/cameraicon.png")} alt="icon" />
-                          <input type="file" onChange={ (e) => this.handleChangeFile(e.target.files) } /> </span>
+                          <input type="file" onChange={(e) => this.handleChangeFile(e.target.files)} /> </span>
                         <span className="input_filedis">  </span>    </div>
-                      <a href={HBRout+ "/MyProfile"}>{sessionStorage.getItem("username")}</a>
-                      
+                      <a href={HBRout + "/MyProfile"}>{sessionStorage.getItem("username")}</a>
+
                     </div>
                   </div>
 
@@ -349,9 +346,9 @@ class MyProfile extends Component {
                     <h2>BASIC DETAILS </h2>
                   </div>
                   <div className="profile_fieldsdetails">
-                  <div className="form-group">
+                    <div className="form-group">
                       <input type="text" className="form-control" name="name" onChange={formthis.onChange} value={formthis.state.name} placeholder="Name" />
-                      
+
                     </div>
                     <div className="form-group">
                       <input type="text" className="form-control" readOnly={true} name="phone" onChange={formthis.onChange} value={formthis.state.phone} placeholder="Mobile No." />
@@ -362,7 +359,7 @@ class MyProfile extends Component {
                       <small>* Email should be match with your authentic identity.</small>
                     </div>
                     <div className="form-group">
-                      <input type="text" className="form-control" readOnly={(formthis.state.istnameedit==="1")?false:true} name="teamname" onChange={formthis.onChange} value={formthis.state.teamname} placeholder="Team Name" />
+                      <input type="text" className="form-control" readOnly={(formthis.state.istnameedit === "1") ? false : true} name="teamname" onChange={formthis.onChange} value={formthis.state.teamname} placeholder="Team Name" />
                       <small>* Team Name should be editable one time only .</small>
                     </div>
                     <div className="form-group">

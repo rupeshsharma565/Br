@@ -8,6 +8,7 @@ import './scss/style.css';
 import './scss/scustom.css';
 import './scss/responsvie.css';
 
+
 const loading = () => <div className="animated fadeIn pt-3 text-center">Loading...</div>;
 
 // Containers
@@ -68,6 +69,11 @@ const TermsCondition = Loadable({
   loading
 });
 
+const TermsCondition2 = Loadable({
+  loader: () => import('./views/TermsCondition2'),
+  loading
+});
+
 const Support = Loadable({
   loader: () => import('./views/Support'),
   loading
@@ -108,6 +114,11 @@ const FootballFullScoreCard = Loadable({
   loading
 });
 
+const BalanceSheet = Loadable({
+  loader: () => import('./views/BalanceSheet'),
+  loading
+});
+
 
 
 class App extends Component {
@@ -144,6 +155,8 @@ class App extends Component {
             <Route path="/fullscorecardmb/1/:matchid" name="fullscorecardCricket" component={FullScoreCard} />
             <Route path="/fullscorecardmb/2/:matchid" name="fullscorecardFootball" component={FootballFullScoreCard} />
             <Route path="/fullscorecardmb/3/:matchid" name="fullscorecardKabaddi" component={KabaddiFullScoreCard} />
+            <Route exact path="/BalanceSheet" name="BalanceSheet" component={BalanceSheet} />
+
             
 
             <Route exact path="/login" name="Login Page" component={Login} />
@@ -154,16 +167,15 @@ class App extends Component {
             <Route exact path="/LoginOtp/:username" name="LoginOtp" component={LoginOtp} />
             <Route exact path="/LoginPassword/:username" name="LoginPassword" component={LoginPassword} />
             <Route exact path="/PrivacyPolicy" name="PrivacyPolicy" component={PrivacyPolicy} />
-            <Route exact path="/TermsCondition" name="PrivacyPolicy" component={TermsCondition} />
-            
-            
-            
+            <Route exact path="/TermsCondition" name="PrivacyPolicy" component={TermsCondition} /> 
+            <Route exact path="/TermsCondition2" name="PrivacyPolicy" component={TermsCondition2} /> 
             
             <PrivateRoute path="/" name="Home" component={DefaultLayout} />
 
             
           </Switch>
       </HashRouter>
+      
     );
   }
 }

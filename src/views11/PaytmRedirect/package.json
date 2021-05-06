@@ -1,6 +1,0 @@
-{
-  "name": "PaytmRedirect",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./PaytmRedirect.js"
-}

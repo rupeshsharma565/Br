@@ -1,547 +1,527 @@
-    /* custom */
-    .carousel-control-prev{
-        display: none !important;
-    }
-    
-    .carousel-control-next{
-        display: none !important;
-    }
-    
-    .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
-        color: #fff;
-        background-color: #640eb3;
-    }
+/* custom */
+.carousel-control-prev {
+  display: none !important;
+}
 
-   
-    
-    .otpbk{
-        background-color: #c51d24;
-        color: #fff;
-        position: fixed;
-        max-width: 550px;
-        z-index: 999;
-        width: 100%;
-        height: 44px;
-        float: left;
-        box-shadow: 0 0 10px #0b141f;
-        padding: 0 15px;
-        top: 0;
-        left: 0;
-       
-       
-    }
-    
-    
-    .hd_nav1 {
-        width: 44px;
-        height: 44px;
-        display: inline-block;
-        background: url("../images/leftarrow.jpeg") left center no-repeat;
-        background-size: 25px;
-        border: none 0;
-        cursor: pointer;
-    }
-    
-    .pointernone{
-        pointer-events: none;
-    }
-    
-    .pointerevent{
-        pointer-events: visible;
-    }
-    
-    .pointer{
-        cursor: pointer;
-    }
-    
-    .hd_time{
-        float: left;
-        border: 6px;
-        border-style: solid;
-        border-color: #3567b2;
-    }
-    
-    .myaccount_innerbox{
-        text-align: left !important;
-    }
-    
-    .sub-title{
-        font-size: 12px;
-    }
-    
-    .title{
-        font-size: 18px;
-        font-weight: 400;
-    }
-    
-    .continuebutton{
-        background-color: #d1d5dc !important;
-    }
-    
-    .hidden{
-        display: none !important;
-    }
-    
-    .roleIcon{
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid #9b9b9b;
-        color: #9b9b9b;
-        font-size: 10px;
-        margin-right: 8px;
-    }
-    
-    
-    .roleCV{
-        height: 40px;
-        width: 40px;
-        border-radius: 50%;
-        border: 1px solid #9b9b9b;
-        display: flex;
-        color: #9b9b9b;
-        justify-content: center;
-        align-items: center;
-    }
-    
-    
-    .roleCVSelect{
-        background-color: #000;
-        color: #fff;
-    }
-    
-    .join_contestbtn{
-        color: #fff !important;
-    }
-    
-    .textcenter{
-        text-align:center;
-    }
-    
-    .playername{
-        width: 50px;
-    }
-    
-    .flag_008b5{
-        width: 50px;
-    }
-    
-    /* .hd_left div div{
+.carousel-control-next {
+  display: none !important;
+}
+
+.nav-pills > li.active > a,
+.nav-pills > li.active > a:hover,
+.nav-pills > li.active > a:focus {
+  color: #fff;
+  /* background-color: #db3e30; */
+  background: linear-gradient(140deg, #54439d, #0bb8f0, #9ebf0f, #f8b30d);
+}
+
+.otpbk {
+  background-color: #c51d24;
+  color: #fff;
+  position: fixed;
+  max-width: 550px;
+  z-index: 999;
+  width: 100%;
+  height: 44px;
+  float: left;
+  box-shadow: 0 0 10px #0b141f;
+  padding: 0 15px;
+  top: 0;
+  left: 0;
+}
+
+.hd_nav1 {
+  width: 44px;
+  height: 44px;
+  display: inline-block;
+  background: url("../images/leftarrow.jpeg") left center no-repeat;
+  background-size: 25px;
+  border: none 0;
+  cursor: pointer;
+}
+
+.pointernone {
+  pointer-events: none;
+}
+
+.pointerevent {
+  pointer-events: visible;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.hd_time {
+  float: left;
+  border: 6px;
+  border-style: solid;
+  border-color: #3567b2;
+}
+
+.myaccount_innerbox {
+  text-align: left !important;
+}
+
+.sub-title {
+  font-size: 12px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.continuebutton {
+  background-color: #d1d5dc !important;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.roleIcon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #9b9b9b;
+  color: #9b9b9b;
+  font-size: 10px;
+  margin-right: 8px;
+}
+
+.roleCV {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: 1px solid #9b9b9b;
+  display: flex;
+  color: #9b9b9b;
+  justify-content: center;
+  align-items: center;
+}
+
+.roleCVSelect {
+  background-color: #000;
+  color: #fff;
+}
+
+.join_contestbtn {
+  color: #fff !important;
+}
+
+.textcenter {
+  text-align: center;
+}
+
+.playername {
+  width: 50px;
+}
+
+.flag_008b5 {
+  width: 50px;
+}
+
+/* .hd_left div div{
         position: fixed !important;
     
     } */
-    
-    /* .menu_navleftpart{
+
+/* .menu_navleftpart{
         position: unset !important;
     }
     
     .hd_left div div {
         position: fixed !important;
     } */
-    
-    #btn123{
-        position: absolute;
-        z-index: 999;
-    }
-    
-    .left-menu-open{
-        left:0px;
-    }
-    
-    .slick-dots button {
-        background: #fff;
-        border: 2px solid #000;
-        border-radius: 50%;
-        color: transparent;
-        cursor: pointer;
-        font-size: 0;
-        height: 14px;
-        line-height: 0;
-        outline: medium none;
-        padding: 5px;
-        width: 14px;
-        margin-left: 2px;
-      }
-    
-      .slickfirst_imgs .slick-dots{
-          background-color: transparent;
-          bottom: 42px;
-          left:112px;
-          list-style-type: none !important;
-      }
-    
-      .slidebuttonselected{
-          background: #000 !important;
-      }
-    
-      .myac_bottombtn{
-          text-align: center!important;
-      }
-    
-      .g_button{
-          color: #fff !important;
-      }
-    
-    
-    
-    
-    .nav > li > a {
-        position: relative;
-        display: block;
-        padding: 11px 15px;
-    }
-    
-    
-    .contestteamselected{
-       background-color: #640eb33b
-    }
-    
-    .myteam{
-        background-color: #640eb326;
-    }
-    
-    div a.full_scorecard.pull-right{
-    color: #fff !important;
-    }
-    
-    .playerdetail{
-        width: 549px;
-        display: inline-block;
-        position: fixed;
-        left: 0px;
-        top: 35px;
-        z-index: 99;
-        height: 100vh;
-        -webkit-transition: 0.3s;
-        transition: 0.3s;
-    }
-    
-    .playerdetailclose{
-        top: unset !important;
-    }
-    
-    .closebutton{
-        float: right;
-        padding: 10px;
-        font-size: 20px;
-    }
-    
-    .crenewtemulist li{
-        width: 23% !important;
-    }
-    
-    
-    .playertypeactive{
-        border-bottom: 3px solid #3567b2 !important;
-        height: 90px!important;
-        border-radius: 5px !important;
-        position: relative;
-        display: block;
-        padding: 11px 8px!important;
-    }
-    
-    .crenewtm_tabliimg span{
-        top: 42px;
-    }
-    
-     .createteamactve.active a{
-        background-color: #337ab7 !important;
-    }
-    
-    
-    .cerat_innertemctp {
-        color: #640eb3;
-        border-bottom: 0px;
-    }
-    
-    .facebook1 {
-        /* border-radius: 30px; */
-       
-        font-size: 30px;
-        color: #385b8d;
-        background-color: Transparent !important;
-        background-repeat: no-repeat !important;
-        border: none !important;
-        cursor: pointer !important;
-        overflow: hidden !important;
-    }
-    
-    .facebook1 .metro{
-        background-color: Transparent !important;
-        background-repeat: no-repeat !important;
-        border: none !important;
-        cursor: pointer !important;
-        overflow: hidden !important;
-    }
-    
-    .social_btn button{
-        font-size: 30px;
-        background-color: Transparent !important;
-        background-repeat: no-repeat !important;
-        border: none !important;
-        cursor: pointer !important;
-    
-    }
-    
-    .panel-title.nobackground{
-        background-image: none !important;
-    }
-    
-    .paymentmethodselect{
-        background-color:  #640eb338
-    }
-    
-    
-    .colorgreentranstion{
-    color:green;
-    }
-    
-    .colorredtranstion{
-        color:red;
-        }
-    
-    
-    
-    .progress-xs{
-        height: 10px !important;
-    }
-    
-    a.jontedbtn{
-        width: auto;
-        display: block;
-        border-radius: 4px;
-        padding: 0 15px;
-        color: #000 !important;
-        height: 32px;
-        line-height: 32px;
-        
-    }
-    
-    
-    .container-fluid{
-        padding-left: 1px !important;
-    }
-    
-    
-    #contest1{
-        margin-top: 14px;
-    }
-    
-    .textcapitalize{
-        text-transform: capitalize;
-    }
-    
-    .wk_craditbox{
-        height: 125px;
-    }
-    
-    .radio-btn{
-        margin-left: 20px;
-    }
 
-
-    .pointernone.addintuicon_intboxde i.fa-plus-circle {
-        color: #999;
-    }
-
-    .pointer.addintuicon_intboxde i.fa-plus-circle {
-        color:#640eb3;
-    }
-
-    .pointer.addintuicon_intboxde i.fa-minus-circle {
-        color:green;
-    }
-
-
-    .playernamebgt1{
-        background-color: #3567b2;
-    }
-
-    .playernamebgt2{
-        background-color: red;
-    }
-
-
-    .btn-verified
-    {
-        float: right;
-        padding: 5px;        
-        color: green;
-    }
-
-    .btn-notverified
-    {
-        float: right;
-        padding: 5px;
-        cursor: pointer;
-        color: #ed2301;
-    }
-
-    .underline{
-        text-decoration: underline !important;
-    }
-
-    .text-cap{
-        text-transform: capitalize;
-    }
-
-
-    .isverifed{
-        background-color: green;
-        cursor:default;
-    }
-
-
-.canceled{
-    color: #c51d24;
+#btn123 {
+  position: absolute;
+  z-index: 999;
 }
 
+.left-menu-open {
+  left: 0px;
+}
+
+.slick-dots button {
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 50%;
+  color: transparent;
+  cursor: pointer;
+  font-size: 0;
+  height: 14px;
+  line-height: 0;
+  outline: medium none;
+  padding: 5px;
+  width: 14px;
+  margin-left: 2px;
+}
+
+.slickfirst_imgs .slick-dots {
+  background-color: transparent;
+  bottom: 42px;
+  left: 112px;
+  list-style-type: none !important;
+}
+
+.slidebuttonselected {
+  background: #000 !important;
+}
+
+.myac_bottombtn {
+  text-align: center !important;
+}
+
+.g_button {
+  color: #fff !important;
+}
+
+.nav > li > a {
+  position: relative;
+  display: block;
+  padding: 11px 15px;
+}
+
+.contestteamselected {
+  background-color: #e69b393b;
+}
+
+.myteam {
+  background-color: #e69b3926;
+}
+
+div a.full_scorecard.pull-right {
+  color: #fff !important;
+}
+
+.playerdetail {
+  width: 549px;
+  display: inline-block;
+  position: fixed;
+  left: 0px;
+  top: 35px;
+  z-index: 99;
+  height: 100vh;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.playerdetailclose {
+  top: unset !important;
+}
+
+.closebutton {
+  float: right;
+  padding: 10px;
+  font-size: 20px;
+}
+
+.crenewtemulist li {
+  width: 23% !important;
+}
+
+.playertypeactive {
+  border-bottom: 3px solid #3567b2 !important;
+  height: 90px !important;
+  border-radius: 5px !important;
+  position: relative;
+  display: block;
+  padding: 11px 8px !important;
+}
+
+.crenewtm_tabliimg span {
+  top: 42px;
+}
+
+.createteamactve.active a {
+  background-color: #337ab7 !important;
+}
+
+.cerat_innertemctp {
+  color: #e69b39;
+  border-bottom: 0px;
+}
+
+.facebook1 {
+  /* border-radius: 30px; */
+
+  font-size: 30px;
+  color: #385b8d;
+  background-color: Transparent !important;
+  background-repeat: no-repeat !important;
+  border: none !important;
+  cursor: pointer !important;
+  overflow: hidden !important;
+}
+
+.facebook1 .metro {
+  background-color: Transparent !important;
+  background-repeat: no-repeat !important;
+  border: none !important;
+  cursor: pointer !important;
+  overflow: hidden !important;
+}
+
+.social_btn button {
+  font-size: 30px;
+  background-color: Transparent !important;
+  background-repeat: no-repeat !important;
+  border: none !important;
+  cursor: pointer !important;
+}
+
+.panel-title.nobackground {
+  background-image: none !important;
+}
+
+.paymentmethodselect {
+  background-color: #39a1e638;
+}
+
+.colorgreentranstion {
+  color: green;
+}
+
+.colorredtranstion {
+  color: red;
+}
+
+.progress-xs {
+  height: 10px !important;
+}
+
+a.jontedbtn {
+  width: auto;
+  display: block;
+  border-radius: 4px;
+  padding: 0 15px;
+  color: #000 !important;
+  height: 32px;
+  line-height: 32px;
+}
+
+.container-fluid {
+  padding-left: 1px !important;
+}
+
+#contest1 {
+  margin-top: 14px;
+}
+
+.textcapitalize {
+  text-transform: capitalize;
+}
+
+.wk_craditbox {
+  height: 125px;
+}
+
+.radio-btn {
+  margin-left: 20px;
+}
+
+.pointernone.addintuicon_intboxde i.fa-plus-circle {
+  color: #999;
+}
+
+.pointer.addintuicon_intboxde i.fa-plus-circle {
+  color: #e69b39;
+}
+
+.pointer.addintuicon_intboxde i.fa-minus-circle {
+  color: green;
+}
+
+.playernamebgt1 {
+  background-color: #3567b2;
+}
+
+.playernamebgt2 {
+  background-color: red;
+}
+
+.btn-verified {
+  float: right;
+  padding: 5px;
+  color: green;
+}
+
+.btn-notverified {
+  float: right;
+  padding: 5px;
+  cursor: pointer;
+  color: #ed2301;
+}
+
+.underline {
+  text-decoration: underline !important;
+}
+
+.text-cap {
+  text-transform: capitalize;
+}
+
+.isverifed {
+  background-color: green;
+  cursor: default;
+}
+
+.canceled {
+  color: #c51d24;
+}
 
 span.teamname_dinamic {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
-.win-amount{
-    color: green;
+.win-amount {
+  color: green;
 }
 
 table.table.table-bordered.header-contdetail thead {
-    background-color: black;
-    color: #fff;
+  background-color: black;
+  color: #fff;
 }
 
-
-.bg-notplaying{
-    background-color: #efc6c6 !important;
+.bg-notplaying {
+  background-color: #efc6c6 !important;
 }
 
-.bg-notplayingfont{
-    color: #e74848 !important;
-    font-size: 12px;
+.bg-notplayingfont {
+  color: #e74848 !important;
+  font-size: 12px;
 }
 
-.bg-playingfont{
-    color:#217802 !important;
-    font-size: 12px;
+.bg-playingfont {
+  color: #217802 !important;
+  font-size: 12px;
 }
 
-.isverifybtn{
-    background-color: green;
-    cursor: default;
-    color: white;
+.isverifybtn {
+  background-color: green;
+  cursor: default;
+  color: white;
 }
-
 
 .plyer_innerdbxp span {
-    background-color: #000000;
-    top: 61px;
+  background-color: #000000;
+  top: 61px;
 }
 
 .plyer_innerdbxp {
-    height: 82px;
+  height: 82px;
 }
 
 /*rahul*/
 .modal-dialog.player-points-modal.modal-sm {
-    display: block;
-    height: 350px;
-    overflow-y: auto;
+  display: block;
+  height: 350px;
+  overflow-y: auto;
 }
 .player-points-modal {
-    left: 650px !important;
-    margin: 50px 0px;
+  left: 650px !important;
+  margin: 50px 0px;
 }
 
 .onload_player_modal {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background: #00000096;
-    z-index: 999;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: #00000096;
+  z-index: 999;
 }
 .isPlayerPoint .modal-backdrop.fade.show {
-    display: none !important;
+  display: none !important;
 }
 
 .inning-card-header {
-    background: #4a4a4a;
-    color: #fff;
-    padding: 8px 10px;
+  background: #4a4a4a;
+  color: #fff;
+  padding: 8px 10px;
 }
 
 p.match-date {
-    margin: 10px 0px;
+  margin: 10px 0px;
 }
-
-
 
 .notify-icon i.fa.fa-bell.fa-lg {
-    color: #fff;
-    font-size: 20px;
+  color: #fff;
+  font-size: 20px;
 }
 a.notify-icon {
-    width: auto;
-    float: right;
-    margin: 10px 4px;
+  width: auto;
+  float: right;
+  margin: 10px 4px;
 }
 
 a.notify-icon span.notification_count {
-    position: absolute;
-    right: 20px;
-    top: 6px;
-    width: 10px;
-    height: 10px;
-    text-align: center;
-    line-height: 15px;
-    color: #fff;
-    border-radius: 50%;
-    padding: 2px;
-    font-size: 14px;
+  position: absolute;
+  right: 20px;
+  top: 6px;
+  width: 10px;
+  height: 10px;
+  text-align: center;
+  line-height: 15px;
+  color: #fff;
+  border-radius: 50%;
+  padding: 2px;
+  font-size: 14px;
 }
 a.notify-icon span.notification_count i.fa.fa-certificate {
-    color: #cdd01e;
+  color: #cdd01e;
 }
 
-td.extra_run_block, td.total_run_block {
-    text-align: end;
+td.extra_run_block,
+td.total_run_block {
+  text-align: end;
 }
 .td-bg-gray {
-    background: #ecebeb;
+  background: #ecebeb;
 }
 
 span.delete-all-notification {
-    float: right;
-    margin-top: 9px;
-    color: #fff;
-    font-size: 16px;
+  float: right;
+  margin-top: 9px;
+  color: #fff;
+  font-size: 16px;
 }
 
-
 .selectedTeam {
-    background-color: #c2c2c2;
+  background-color: #c2c2c2;
 }
 /* be attention for team color code*/
 .team1_color {
-    background-color: #d01d3a !important;
-    color: #fff;
+  background-color: #d01d3a !important;
+  color: #fff;
 }
 .team2_color {
-    background-color: #1029dd !important;
-    color: #fff;
+  background-color: #1029dd !important;
+  color: #fff;
 }
 .notify-date {
-    float: right;
-    font-size: 10px;
+  float: right;
+  font-size: 10px;
 }
 span.teamname_dinamic {
-    margin-right: 5px;
+  margin-right: 5px;
 }
 
-.player-points-modal .modal-body  {overflow-y: scroll;  height: 350px;}
-.score_scrolltablesnew {padding-top: 48px;}
-.ajteamvs_namesfix {position: fixed; width: 540px; z-index: 99;}
+.player-points-modal .modal-body {
+  overflow-y: scroll;
+  height: 350px;
+}
+.score_scrolltablesnew {
+  padding-top: 48px;
+}
+.ajteamvs_namesfix {
+  position: fixed;
+  width: 540px;
+  z-index: 99;
+}

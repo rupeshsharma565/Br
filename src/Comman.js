@@ -14,7 +14,7 @@ export const dashboardpage = HBRout + "/matches";
 
 export const checkresponse = (title, status, message, messgshow) => {
   if (status === 401 || status === 403) {
-    return window.location.href = HBRout + '/login';
+    //return window.location.href = HBRout + '/suprt';
   }
   if (status === 500) {
     return "";
@@ -113,7 +113,7 @@ export const timestampToDate = (timestamp) => {
 export const timestampToDateTime_old = (timestamp) => {
   if (timestamp) {
     let intdate = parseFloat(timestamp) * 1000;
-    let fulldate = new Date(intdate).toLocaleString("en-US", {timeZone: "Asia/Kolkata"});
+    let fulldate = new Date(intdate).toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
     return dateFormat(fulldate, "yyyy-mm-dd hh:mm:ss");
   }
   else {
@@ -121,17 +121,17 @@ export const timestampToDateTime_old = (timestamp) => {
   }
 }
 
-export const timestampToDateTime = (timestamps)=> {
+export const timestampToDateTime = (timestamps) => {
 
-var u = new Date(timestamps*1000);
-var month = u.getMonth();
-month = month+1;
+  var u = new Date(timestamps * 1000);
+  var month = u.getMonth();
+  month = month + 1;
   return u.getFullYear() +
     '-' + ('0' + month).slice(-2) +
-    '-' + ('0' + u.getDate()).slice(-2) + 
+    '-' + ('0' + u.getDate()).slice(-2) +
     ' ' + ('0' + u.getHours()).slice(-2) +
     ':' + ('0' + u.getMinutes()).slice(-2) +
-    ':' + ('0' + u.getSeconds()).slice(-2) 
+    ':' + ('0' + u.getSeconds()).slice(-2)
 }
 
 export const goBack = () => {
@@ -166,7 +166,7 @@ export const mymatchs = {
 }
 
 //export const PAYTM_TXN_URL = 'https://securegw-stage.paytm.in/theia/processTransaction';
-export const PAYTM_TXN_URL='https://securegw.paytm.in/theia/processTransaction';
+export const PAYTM_TXN_URL = 'https://securegw.paytm.in/theia/processTransaction';
 
 
 export const getCurrentTime = () => {
@@ -328,8 +328,8 @@ export const playerPointKeyConst = {
     "wicket": "Wickets",
     "mdnover": "Maiden Overs",
     "catch": "Catch",
-    "thrower":"Thrower",
-    "catcher":"Catcher",
+    "thrower": "Thrower",
+    "catcher": "Catcher",
     "stumped": "Stumped",
     "runout": "Run Out",
     "fiftyBonus": "50's Bonus",
@@ -350,23 +350,23 @@ export const playerPointKeyConst = {
     "sr": "S/R",
     "totalpoints": "Total Points"
   },
-  "2":{
+  "2": {
     "playername": "Player Name",
-    "role":"Role",
+    "role": "Role",
     "playing": "Playing Points",
-    "goal":"Goal",
-    "assist":"Assist",
-    "owngoal":"Own Goal",
-    "goalsaved":"Shot saved",
-    "goalsconceded":"Goals Conceded",
-    "cleansheet":"Clean Sheet",
-    "penaltysave":"Penalty Save",
-    "yellowcard":"Yellow Card",
-    "redcard":"Red Card",
-    "penaltymissed":"Penalty Missed",
-    "passes":"Passes",
-    "tackles":"Tackles",
-    "shotontarget":"Shot On Target",
+    "goal": "Goal",
+    "assist": "Assist",
+    "owngoal": "Own Goal",
+    "goalsaved": "Shot saved",
+    "goalsconceded": "Goals Conceded",
+    "cleansheet": "Clean Sheet",
+    "penaltysave": "Penalty Save",
+    "yellowcard": "Yellow Card",
+    "redcard": "Red Card",
+    "penaltymissed": "Penalty Missed",
+    "passes": "Passes",
+    "tackles": "Tackles",
+    "shotontarget": "Shot On Target",
     "totalpoints": "Total Points"
   },
   "3": {
@@ -380,8 +380,8 @@ export const playerPointKeyConst = {
     "redcard": "Red Card",
     "greencard": "Green Card",
     "yellowcard": "Yellow Card",
-    "pushallout" : "Push All Out",
-    "getallout" : "Get All Out",
+    "pushallout": "Push All Out",
+    "getallout": "Get All Out",
     "totalpoints": "Total Points"
   }
 }
@@ -390,33 +390,33 @@ export const overrideLoaderCss = "display: block;margin: 0 auto;border-color: re
 export const loaderColorCode = "#ea4c89";
 export const currentTimestamp = parseInt(Date.now() / 1000);
 
-export const matchCountDown = (timestamp,elementID) => {
+export const matchCountDown = (timestamp, elementID) => {
   //var deadline = new Date("Dec 5, 2019 23:37:25").getTime();
-  var deadline = timestamp *1000;
+  var deadline = timestamp * 1000;
   var countdown = "00h 00m 00s";
-  var x = setInterval(function() { 
-    var now = new Date().getTime(); 
-    var t = deadline - now; 
-    var days = Math.floor(t / (1000 * 60 * 60 * 24)); 
-    var hours = Math.floor((t%(1000 * 60 * 60 * 24))/(1000 * 60 * 60)); 
-    var minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60)); 
+  var x = setInterval(function () {
+    var now = new Date().getTime();
+    var t = deadline - now;
+    var days = Math.floor(t / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((t % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((t % (1000 * 60)) / 1000);
-    if(days != null && hours != null && minutes != null && seconds != null){
-      document.getElementById(elementID).innerHTML = days + "d "  
-      + hours + "h " + minutes + "m " + seconds + "s "; 
-    } 
-    if (t < 0) { 
-        clearInterval(x); 
-        document.getElementById(elementID).innerHTML = "00h 00h 00s"; 
+    if (days != null && hours != null && minutes != null && seconds != null) {
+      document.getElementById(elementID).innerHTML = days + "d "
+        + hours + "h " + minutes + "m " + seconds + "s ";
     }
-    
+    if (t < 0) {
+      clearInterval(x);
+      document.getElementById(elementID).innerHTML = "00h 00h 00s";
+    }
+
   }, 1000);
-  return true; 
+  return true;
 }
 
 export const OTP_TIMEOUT = 30;
 
-export const timestampToDateString = (timestamp)=>{
+export const timestampToDateString = (timestamp) => {
   let intdate = parseInt(timestamp) * 1000;
   const date = new Date(intdate);
   const formattedDate = date.toLocaleDateString('en-IN', {
@@ -426,84 +426,84 @@ export const timestampToDateString = (timestamp)=>{
 }
 
 export const fantasyPointSystem = {
-  "football":{
-    "playfiftyfivemin":"Played 55 minutes or more",
-    "playlessfiftyfive":"Played less than 55 minutes",
-    "goalfor":"For every goal scored (Forward)",
-    "goalmid":"For every goal scored (Midfielder)",
-    "goalgk":"For every goal scored (GK)",
-    "goaldef":"For every goal scored (Defender)",
-    "assist":"For every assist",
-    "passes":"For every 10 passes completed",
-    "shotontarget":"For every 2 shots on target",
-    "cleansheetmid":"Clean sheet (Midfielder)",
-    "cleansheetgk":"Clean sheet (GK)",
-    "cleansheetdef":"Clean sheet (Defender)",
-    "goalsaved":"For every 3 shots saved(GK)",
-    "penaltysavegk":"For every penalty saved (GK)",
-    "tackles":"For every 3 successful tackles made",
-    "yellowcard":"Yellow card",
-    "redcard":"Red card",
-    "owngoal":"For every own goal",
-    "goalsconcededgk":"For every 2 goals conceded (GK)",
-    "goalsconcededdef":"For every 2 goals conceded (Defender)",
-    "penaltymissed":"For every penalty missed"
+  "football": {
+    "playfiftyfivemin": "Played 55 minutes or more",
+    "playlessfiftyfive": "Played less than 55 minutes",
+    "goalfor": "For every goal scored (Forward)",
+    "goalmid": "For every goal scored (Midfielder)",
+    "goalgk": "For every goal scored (GK)",
+    "goaldef": "For every goal scored (Defender)",
+    "assist": "For every assist",
+    "passes": "For every 10 passes completed",
+    "shotontarget": "For every 2 shots on target",
+    "cleansheetmid": "Clean sheet (Midfielder)",
+    "cleansheetgk": "Clean sheet (GK)",
+    "cleansheetdef": "Clean sheet (Defender)",
+    "goalsaved": "For every 3 shots saved(GK)",
+    "penaltysavegk": "For every penalty saved (GK)",
+    "tackles": "For every 3 successful tackles made",
+    "yellowcard": "Yellow card",
+    "redcard": "Red card",
+    "owngoal": "For every own goal",
+    "goalsconcededgk": "For every 2 goals conceded (GK)",
+    "goalsconcededdef": "For every 2 goals conceded (Defender)",
+    "penaltymissed": "For every penalty missed"
   },
-  "kabaddi":{
-    "playing":"In Starting 7",
-    "touch":"For every successful raid touch point",
-    "raidbonus":"Raid Bonus",
-    "successtackle":"For every successful tackle",
-    "unsuccessraid":"For every unsuccessful raid",
-    "supertackle":"Super tackle",
-    "pushallout":"Pushing all out (starting 7)",
-    "getallout":"Getting all out (starting 7)",
-    "greencard":"Green Card",
-    "yellowcard":"Yellow Card",
-    "redcard":"Red card",
-    "makesubstitute":"Substitute appearance"
+  "kabaddi": {
+    "playing": "In Starting 7",
+    "touch": "For every successful raid touch point",
+    "raidbonus": "Raid Bonus",
+    "successtackle": "For every successful tackle",
+    "unsuccessraid": "For every unsuccessful raid",
+    "supertackle": "Super tackle",
+    "pushallout": "Pushing all out (starting 7)",
+    "getallout": "Getting all out (starting 7)",
+    "greencard": "Green Card",
+    "yellowcard": "Yellow Card",
+    "redcard": "Red card",
+    "makesubstitute": "Substitute appearance"
   }
 }
 
-export const priceOnPercent = (totalWinPrize=0,percent=0)=>{
+export const priceOnPercent = (totalWinPrize = 0, percent = 0) => {
   let price = 0;
-  price = parseFloat(totalWinPrize*percent)/100;
+  price = parseFloat(totalWinPrize * percent) / 100;
   return price;
 }
 
-export const findObjectByKey = (nameKey, array) =>{
-  for (var i=0; i < array.length; i++) {
-      if (array[i].name === nameKey) {
-          return array[i];
-      }
+export const findObjectByKey = (nameKey, array) => {
+  for (var i = 0; i < array.length; i++) {
+    if (array[i].name === nameKey) {
+      return array[i];
+    }
   }
 }
 
-export const toastMessage = (status,msg)=>{
+export const toastMessage = (status, msg) => {
   toast.dismiss();
-  if(status==="success"){
+  if (status === "success") {
     toast.success(msg, {
       position: toast.POSITION.TOP_LEFT
     });
-  } else if(status==="error"){
+  } else if (status === "error") {
     toast.error(msg, {
       position: toast.POSITION.TOP_LEFT
     });
-  } else if(status==="warning"){
+  } else if (status === "warning") {
     toast.warn(msg, {
       position: toast.POSITION.TOP_LEFT
     });
-  } else if(status==="info"){
+  } else if (status === "info") {
     toast.info(msg, {
       position: toast.POSITION.TOP_LEFT
     });
-  } else if(status===""){
+  } else if (status === "") {
     toast(msg, {
       position: toast.POSITION.TOP_LEFT,
       className: 'foo-bar'
     });
   }
-  
+
 }
 
 export const statusColorCode = (type = null) => {
@@ -517,8 +517,12 @@ export const statusColorCode = (type = null) => {
 }
 
 
-export const securityCall=(swindow)=>{
-    if (swindow.location !== swindow.top.location) {
+export const securityCall = (swindow) => {
+  if (swindow.location !== swindow.top.location) {
     swindow.top.location = swindow.location;
-    }
+  }
 }
+
+
+
+

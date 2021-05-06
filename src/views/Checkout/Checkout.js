@@ -1,13 +1,23 @@
-import React, { Component } from 'react';
-import { AvForm, AvField } from 'availity-reactstrap-validation';
-import config from '../../config';
-import { goBack, sendHome, checkresponse, validation, sessioncheck,HBRout,priceOnPercent,toastMessage,securityCall } from '../../Comman';
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-  // minified version is also included
-  // import 'react-toastify/dist/ReactToastify.min.css';
-let swindow=window;
+import React, { Component } from "react";
+import { AvForm, AvField } from "availity-reactstrap-validation";
+import config from "../../config";
+import {
+  goBack,
+  sendHome,
+  checkresponse,
+  validation,
+  sessioncheck,
+  HBRout,
+  priceOnPercent,
+  toastMessage,
+  securityCall
+} from "../../Comman";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+// minified version is also included
+// import 'react-toastify/dist/ReactToastify.min.css';
+let swindow = window;
 securityCall(swindow);
 
 class Checkout extends Component {
@@ -15,39 +25,47 @@ class Checkout extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      amount:  (this.props.match.params.amount) ? (this.props.match.params.amount) :0,
-      isDisabled:true,
-      orderData:{},
-      order_id:"",
-      payment_method:(this.props.match.params.type) ? this.props.match.params.type :"",
-      promocode:(this.props.match.params.promocode && this.props.match.params.promocode !=="no") ? atob(this.props.match.params.promocode) :""
+      amount: this.props.match.params.amount
+        ? this.props.match.params.amount
+        : 0,
+      isDisabled: true,
+      orderData: {},
+      order_id: "",
+      payment_method: this.props.match.params.type
+        ? this.props.match.params.type
+        : "",
+      promocode:
+        this.props.match.params.promocode &&
+          this.props.match.params.promocode !== "no"
+          ? atob(this.props.match.params.promocode)
+          : ""
     };
     sessioncheck();
     this.createOrder = this.createOrder.bind(this);
   }
 
-
   componentDidMount() {
     sessioncheck();
     const script = document.createElement("script");
-          script.src = "https://checkout.razorpay.com/v1/checkout.js";
-          script.async = true;
-          document.body.appendChild(script);
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    // script.src = "https://test.cashfree.com/billpay/checkout/post/submit";
+    script.async = true;
+    document.body.appendChild(script);
     this.createOrder();
   }
 
   getPrivateContestInfo = () => {
     this._isMounted = true;
     var formthis = this;
-    let args = {atype:"pvtcontest"};
+    let args = { atype: "pvtcontest" };
     var object = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + sessionStorage.getItem('jwt') + ''
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + sessionStorage.getItem("jwt") + ""
       },
-      body:JSON.stringify(args)
-    }
+      body: JSON.stringify(args)
+    };
     var api_url = `${config.API_URL}`;
 
     var apiUrl = "";
@@ -55,53 +73,72 @@ class Checkout extends Component {
 
     formthis.setState({
       privateContestInfo: {}
-    })
+    });
 
     fetch(apiUrl, object)
       .then(function (response) {
-        var chkresp = checkresponse("Wrong", response.status, response.message, 2);
+        var chkresp = checkresponse(
+          "Wrong",
+          response.status,
+          response.message,
+          2
+        );
         if (chkresp === true) {
           response.json().then(json => {
             if (json.error === false) {
-              if(formthis._isMounted){
+              if (formthis._isMounted) {
                 formthis.setState({
                   privateContestInfo: json.data,
-                  minWinPrize:(json.data.pvtcontest) ? json.data.pvtcontest.winprize.min :0,
-                  maxWinPrize:(json.data.pvtcontest) ? json.data.pvtcontest.winprize.max :1000,
-                  minContestSize:(json.data.pvtcontest) ? json.data.pvtcontest.cnstsize.min :2,
-                  maxContestSize:(json.data.pvtcontest) ? json.data.pvtcontest.cnstsize.max :100,
-                  admincommission:(json.data.pvtcontest) ? json.data.pvtcontest.adminchrg :0,
-                  minEntryFees:(json.data.pvtcontest) ? json.data.pvtcontest.min_entry_fees :0
-                })
+                  minWinPrize: json.data.pvtcontest
+                    ? json.data.pvtcontest.winprize.min
+                    : 0,
+                  maxWinPrize: json.data.pvtcontest
+                    ? json.data.pvtcontest.winprize.max
+                    : 1000,
+                  minContestSize: json.data.pvtcontest
+                    ? json.data.pvtcontest.cnstsize.min
+                    : 2,
+                  maxContestSize: json.data.pvtcontest
+                    ? json.data.pvtcontest.cnstsize.max
+                    : 100,
+                  admincommission: json.data.pvtcontest
+                    ? json.data.pvtcontest.adminchrg
+                    : 0,
+                  minEntryFees: json.data.pvtcontest
+                    ? json.data.pvtcontest.min_entry_fees
+                    : 0
+                });
               }
-
-            }
-            else {
-              if(formthis._isMounted){
+            } else {
+              if (formthis._isMounted) {
                 formthis.setState({
                   privateContestInfo: {}
-                })
+                });
               }
             }
-          })
+          });
         }
-      }).catch(error => {
+      })
+      .catch(error => {
         checkresponse("Wrong", false, error.toString(), 0);
       });
-  }
+  };
 
   createOrder = () => {
     this._isMounted = true;
     var formthis = this;
-    let args = {amount:formthis.state.amount,pcode:formthis.state.promocode};
+    let args = {
+      amount: formthis.state.amount,
+      pcode: formthis.state.promocode
+    };
     var object = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + sessionStorage.getItem('jwt') + ''
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + sessionStorage.getItem("jwt") + ""
       },
-      body:JSON.stringify(args)
-    }
+      body: JSON.stringify(args)
+    };
     var api_url = `${config.API_URL}`;
 
     var apiUrl = "";
@@ -109,69 +146,76 @@ class Checkout extends Component {
 
     formthis.setState({
       orderData: {}
-    })
+    });
 
     fetch(apiUrl, object)
       .then(function (response) {
-        var chkresp = checkresponse("Wrong", response.status, response.message, 2);
+        var chkresp = checkresponse(
+          "Wrong",
+          response.status,
+          response.message,
+          2
+        );
         if (chkresp === true) {
           response.json().then(json => {
             if (json.error === false) {
-              if(formthis._isMounted){
+              if (formthis._isMounted) {
                 formthis.setState({
                   orderData: json.data,
-                  order_id:(json.data.rorderid) ? json.data.rorderid :"",
-                  pcode:(formthis.state.promocode)?formthis.state.promocode:""
-                })
+                  order_id: json.data.rorderid ? json.data.rorderid : "",
+                  pcode: formthis.state.promocode
+                    ? formthis.state.promocode
+                    : ""
+                });
 
                 let options = {
-                  "key": `${config.RAZORPAY_KEY}`,
-                  "amount": formthis.state.amount*100, // 2000 paise = INR 20, amount in paisa
-                  "name": `${config.PRODUCT_NAME}`,
-                  "order_id":(json.data.rorderid) ? json.data.rorderid :"",
-                  "description": "Purchase Description",
-                  "image": "https://play.11plays.com/assets/img/logo.png",
-                  "handler": function (response){
+                  key: `${config.RAZORPAY_KEY}`,
+                  amount: formthis.state.amount * 100, // 2000 paise = INR 20, amount in paisa
+                  name: `${config.PRODUCT_NAME}`,
+                  order_id: json.data.rorderid ? json.data.rorderid : "",
+                  description: "Purchase Description",
+                  image: "https://play.pride11.com/assets/img/logo.png",
+                  handler: function (response) {
                     var params = response;
                     formthis.doPayment(params);
                   },
-                  "prefill": {
-                    "name": (json.data.username) ? json.data.username :"",
-                    "email": (json.data.email) ? json.data.email :"",
-                    "contact":(json.data.phone) ? json.data.phone :""
+                  prefill: {
+                    name: json.data.username ? json.data.username : "",
+                    email: json.data.email ? json.data.email : "",
+                    contact: json.data.phone ? json.data.phone : ""
                   },
-                  "notes": {
-                    "description": "Add money to wallet"
+                  notes: {
+                    description: "Add money to wallet"
                   },
-                  "theme": {
-                    "color": "#640eb3"
+                  theme: {
+                    color: "#640eb3"
                   }
                 };
-                const rzp1 = new window.Razorpay(options)
+                const rzp1 = new window.Razorpay(options);
                 //let rzp = new Razorpay(options);
                 rzp1.open();
               }
-
             }
-          })
+          });
         }
-      }).catch(error => {
+      })
+      .catch(error => {
         checkresponse("Wrong", false, error.toString(), 0);
       });
-  }
+  };
 
-  doPayment = (params) => {
+  doPayment = params => {
     this._isMounted = true;
     var formthis = this;
     let args = params;
     var object = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + sessionStorage.getItem('jwt') + ''
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + sessionStorage.getItem("jwt") + ""
       },
-      body:JSON.stringify(args)
-    }
+      body: JSON.stringify(args)
+    };
     var api_url = `${config.API_URL}`;
 
     var apiUrl = "";
@@ -179,40 +223,46 @@ class Checkout extends Component {
 
     fetch(apiUrl, object)
       .then(function (response) {
-        var chkresp = checkresponse("Wrong", response.status, response.message, 2);
+        var chkresp = checkresponse(
+          "Wrong",
+          response.status,
+          response.message,
+          2
+        );
         if (chkresp === true) {
           response.json().then(json => {
             if (json.error === false) {
               checkresponse("Success", response.status, json.msg, 1);
               formthis.setState({
-                amount:""
-              })
-              window.location.href =HBRout+ "/MyAccount";
-            }else{
+                amount: ""
+              });
+              window.location.href = HBRout + "/MyAccount";
+            } else {
               checkresponse("Wrong", response.status, json.msg, 1);
             }
-          })
+          });
         }
-      }).catch(error => {
+      })
+      .catch(error => {
         checkresponse("Wrong", false, error.toString(), 0);
       });
-  }
+  };
 
-  onChange= (e)=>{
+  onChange = e => {
     const formthis = this;
-    let {name, value} = e.target;
-    
+    let { name, value } = e.target;
+
     formthis.setState({
       [name]: value
     });
-  }
+  };
 
   render() {
     const formthis = this;
     return (
       <div className="fadeIn">
         <div className="left_logincontent profilepadding0">
-        <ToastContainer />
+          <ToastContainer />
           <div className="background-cover ng-scope">
             <div className="header_bg">
               <div className="hd_left">
@@ -240,8 +290,6 @@ class Checkout extends Component {
                 </div>
               </div>
             </AvForm> */}
-
-
           </div>
         </div>
       </div>

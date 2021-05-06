@@ -6,13 +6,13 @@ import React, { Component } from 'react';
 // import facebook from './../../images/facebook.svg'
 // import google from './../../images/google.svg'
 // import refer_code from './../../images/refer_code.svg'
-import { AvForm,AvField } from 'availity-reactstrap-validation';
+import { AvForm, AvField } from 'availity-reactstrap-validation';
 import config from './../../config';
-import { checkresponse ,HBRout,validation,goBack,dashboardpage,overrideLoaderCss,loaderColorCode,OTP_TIMEOUT,securityCall} from './../../Comman';
+import { checkresponse, HBRout, validation, goBack, dashboardpage, overrideLoaderCss, loaderColorCode, OTP_TIMEOUT, securityCall } from './../../Comman';
 //import swal from 'sweetalert';
 import { ClipLoader } from 'react-spinners';
 
-let swindow=window;
+let swindow = window;
 securityCall(swindow);
 
 class Verifyotp extends Component {
@@ -21,8 +21,8 @@ class Verifyotp extends Component {
     this.state = {
       username: '',
       otp: '',
-      isLoading :false,
-      resend_otp_time : sessionStorage.getItem('resend_otp_time') && sessionStorage.getItem('resend_otp_time') ? sessionStorage.getItem('resend_otp_time') : 0
+      isLoading: false,
+      resend_otp_time: sessionStorage.getItem('resend_otp_time') && sessionStorage.getItem('resend_otp_time') ? sessionStorage.getItem('resend_otp_time') : 0
 
     }
     this.startTimer = this.startTimer.bind(this)
@@ -35,24 +35,24 @@ class Verifyotp extends Component {
   }
 
   LoginPage = () => {
-    window.location.href =HBRout+ '/';
+    window.location.href = HBRout + '/';
   }
 
   startTimer() {
     var formthis = this;
-    this.timer = setInterval ( function() { 
-      if(formthis.state.resend_otp_time==0){
+    this.timer = setInterval(function () {
+      if (formthis.state.resend_otp_time == 0) {
         formthis.resetTimer();
-      }else{
+      } else {
         formthis.setState({
-          resend_otp_time : formthis.state.resend_otp_time-1
+          resend_otp_time: formthis.state.resend_otp_time - 1
         })
       }
-  }, 2000);
-    
+    }, 2000);
+
   }
   resetTimer() {
-    sessionStorage.setItem('resend_otp_time',0);
+    sessionStorage.setItem('resend_otp_time', 0);
   }
 
   VerifyOTP = () => {
@@ -76,7 +76,7 @@ class Verifyotp extends Component {
       var args1 = {
         phone: atob(username),
         otp: otp,
-        devicetype:"web"
+        devicetype: "web"
       };
 
       var object = {
@@ -103,8 +103,8 @@ class Verifyotp extends Component {
                 sessionStorage.setItem("jwt", json.data.token);
                 sessionStorage.setItem("refercode", json.data.refercode);
                 sessionStorage.setItem("id", json.data.id);
-                sessionStorage.setItem("profilepic",json.data.userinfo.profilepic);
-                window.location.href =dashboardpage;
+                sessionStorage.setItem("profilepic", json.data.userinfo.profilepic);
+                window.location.href = dashboardpage;
               }
               else {
                 checkresponse("Warning", false, json.msg, 3);
@@ -120,12 +120,12 @@ class Verifyotp extends Component {
         });
     }
     else {
-      window.location.href =HBRout+ '/Register';
+      window.location.href = HBRout + '/Register';
     }
   }
 
   backtoregister = () => {
-    window.location.href =HBRout+ '/Register';
+    window.location.href = HBRout + '/Register';
   }
 
 
@@ -141,9 +141,9 @@ class Verifyotp extends Component {
 
     var args1 = {
       username: atob(username),
-      atype:"newreg",
-      devicetype:"web",
-      devicetoken:"asd46ad46ada4ds"
+      atype: "newreg",
+      devicetype: "web",
+      devicetoken: "asd46ad46ada4ds"
     };
     var object = {
       method: 'POST',
@@ -163,10 +163,10 @@ class Verifyotp extends Component {
         if (chkresp === true) {
           response.json().then(json => {
             if (json.error === false) {
-               checkresponse("Success", 200, json.msg, 1);
-               sessionStorage.setItem('resend_otp_time',OTP_TIMEOUT);
-               formthis.state.resend_otp_time = sessionStorage.getItem('resend_otp_time');
-               formthis.startTimer();
+              checkresponse("Success", 200, json.msg, 1);
+              sessionStorage.setItem('resend_otp_time', OTP_TIMEOUT);
+              formthis.state.resend_otp_time = sessionStorage.getItem('resend_otp_time');
+              formthis.startTimer();
             }
             else {
               checkresponse("Warning", false, json.msg, 3);
@@ -180,7 +180,7 @@ class Verifyotp extends Component {
         });
         checkresponse("Wrong", false, error.toString(), 0);
       });
-    
+
   }
 
   render() {
@@ -208,26 +208,26 @@ class Verifyotp extends Component {
             </div>
 
             ENTER OTP</div>
-			<div className="otpvar_fiy" >
-          <AvForm onValidSubmit={this.VerifyOTP}>
-            <div className="form-group">
-              <AvField type="text" name="otp" name="otp" value={this.state.otp} onChange={this.onChange} className="form-control" placeholder="Mobile OTP *" 
-              validate={{
-                required: { value: true, errorMessage: "Mobile otp is required" },
-                pattern: { value: validation.username, errorMessage: 'Please enter valid otp' },
-                maxLength: { value: 6, errorMessage: 'Your otp must be 6 digits' },
-                minLength: { value: 6, errorMessage: 'Your otp must be 6 digits' }
-              }}/>
-            </div>
-            <div className="form-group">
-            {(formthis.state.resend_otp_time == 0) ? <span className="pointer resand_otnewbs" onClick={this.resendOTP}>Resend OTP</span> : <span className="pointer resand_otnewbs">Resend OTP in {formthis.state.resend_otp_time} secs</span> }
-            </div>
+          <div className="otpvar_fiy" >
+            <AvForm onValidSubmit={this.VerifyOTP}>
+              <div className="form-group">
+                <AvField type="text" name="otp" name="otp" value={this.state.otp} onChange={this.onChange} className="form-control" placeholder="Mobile OTP *"
+                  validate={{
+                    required: { value: true, errorMessage: "Mobile otp is required" },
+                    pattern: { value: validation.username, errorMessage: 'Please enter valid otp' },
+                    maxLength: { value: 6, errorMessage: 'Your otp must be 6 digits' },
+                    minLength: { value: 6, errorMessage: 'Your otp must be 6 digits' }
+                  }} />
+              </div>
+              <div className="form-group">
+                {(formthis.state.resend_otp_time == 0) ? <span className="pointer resand_otnewbs" onClick={this.resendOTP}>Resend OTP</span> : <span className="pointer resand_otnewbs">Resend OTP in {formthis.state.resend_otp_time} secs</span>}
+              </div>
 
-            <div className="sec_btn">
-              <button type="submit" className="btn blue_btn">VERIFY OTP</button>
-            </div>
-          </AvForm>
-        </div>
+              <div className="sec_btn">
+                <button type="submit" className="btn blue_btn">VERIFY OTP</button>
+              </div>
+            </AvForm>
+          </div>
         </div>
 
       </div>

@@ -11,7 +11,6 @@ class TermsCondition extends Component {
     //sessioncheck();
   }
 
-
   componentDidMount() {    
     this.termCondDetail();
   }

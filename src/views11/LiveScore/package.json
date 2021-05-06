@@ -1,6 +1,0 @@
-{
-  "name": "LiveScore",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./LiveScore.js"
-}

@@ -1,0 +1,6 @@
+{
+  "name": "CashfreeRedirect",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./CashfreeRedirect.js"
+}
